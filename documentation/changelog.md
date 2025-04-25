@@ -23,6 +23,14 @@ Types of changes for quick reminder.
 - Room database setup: `PostcardEntity`, `PostcardDao`, and `PostcardDatabase`
 - Room database .fallbackToDestructiveMigration() is deprecated 
   - -> migrations dir: `migration1to2`, for later use
+- Bottom navigation + UI fragments
+  - README.md updated
+- Fragments setup: `AddPostcardFragment`,`GalleryFragment`, `HomeFragment`,`PostcardDetailsFragment`
+- Res/navigation nav_graph.xml
+- Res/menu bottom_nav_menu.xml
+- Drawable/ some icons
+- Dependencies
+  - Navigation
 
 ## [0.1.0] - 2025-04-13
 ### Added

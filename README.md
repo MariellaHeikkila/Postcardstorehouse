@@ -38,6 +38,10 @@ _Build instructions will be added once the first working version is released._
 
 ## Development
 
+- Bottom navigation for intuitive switching between main screens
+
+- Modular fragment-based UI architecture
+
 ### Project Structure
 
 ```
@@ -46,13 +50,15 @@ app/
 │   ├── main/
 │   │   ├── java/com/maalelan/postcardstorehouse/
 │   │   │   ├── activities/                         # Activities
-│   │   │   │   ├── MainActivity.java               # Start
-│   │   │   │   ├── PostcardGalleryActivity.java    # browsing and filtering
-│   │   │   │   ├── PostcardAddNewActivity.java
-│   │   │   │   └── PostcardDetailsActivity.java    # details and edit
+│   │   │   │   └── MainActivity.java               # Host activity for fragments & bottom nav
+│   │   │   ├── fragments/                          # UI fragments
+│   │   │   │   ├── HomeFragment.java               # Home / Landing page
+│   │   │   │   ├── GalleryFragment.java            # Postcard gallery list
+│   │   │   │   ├── AddPostcardFragment.java        # Form to add (/edit old..) a new postcard
+│   │   │   │   └── DetailsFragment.java            # View/edit details of selected postcard
 |   |   |   ├── controllers/                        # Businesslogic
 │   │   │   │   ├── PostcardController.java         # fetch, CRUD, validation
-│   │   │   │   ├── PostcardGalleryController.java  # List&fetch from DAO, filter&organize, pagination?
+│   │   │   │   ├── PostcardGalleryController.java  # List&fetch from DAO, filter&organize, paginate
 │   │   │   │   ├── PostcardImageController.java    # CRUD, saving img to mediastore, ID-binding
 │   │   │   ├── models/                             # Data models
 │   │   │   │   ├── Postcard.java                   # Data model for business logic
@@ -64,11 +70,17 @@ app/
 │   │   │   │       │   └── PostcardDao.java        # DAO (Data Access Object)
 │   │   │   │       └── PostcardDatabase.java       # Room Database
 │   │   │   └── utils/                              # Helper classes
-|   │   │   │   ├── DateUtils.java                  # Date formatting, etc.
-│   │   │   │   ├── ImageUtils.java                 # Image processing functions
-│   │   │   │   ├── InputValidator.java             # checks input formats, return true/false/error msg
-│   │   │   │   └── PostcardFilterHelper.java       # Filtering logic
+|   │   │       ├── DateUtils.java                  # Date formatting, etc.
+│   │   │       ├── ImageUtils.java                 # Image processing functions
+│   │   │       ├── InputValidator.java             # checks input formats, return true/false/error msg
+│   │   │       └── PostcardFilterHelper.java       # Filtering logic
 │   │   └── res/                  # Resources
+│   │       ├── layout/                             # Fragment/activity layouts
+│   │       ├── menu/                               # Menu resources (e.g., bottom nav items)
+│   │       │   └── bottom_nav_menu.xml             # Bottom nav config
+│   │       ├── navigation/                         # Navigation graph
+│   │       │   └── nav_graph.xml                   # Defines fragment destinations
+│   │       └── values/                             # Strings, colors, themes, etc.
 └── build.gradle                  # Gradle-config.
 ```
 

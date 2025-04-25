@@ -63,6 +63,14 @@ public class PostcardEntity {
         this.country = country;
     }
 
+    public void setTheme(String theme) {
+        this.theme = theme;
+    }
+
+    public String getTheme() {
+        return theme;
+    }
+
     public String getSentDate() {
         return sentDate;
     }

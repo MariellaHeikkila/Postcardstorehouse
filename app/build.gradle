@@ -35,6 +35,10 @@ dependencies {
     implementation libs.activity
     implementation libs.constraintlayout
 
+    // Navigation
+    implementation libs.navigation.fragment
+    implementation libs.navigation.ui
+
     // Room-database
     implementation libs.room.runtime
     annotationProcessor libs.room.compiler
