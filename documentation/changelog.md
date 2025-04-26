@@ -28,7 +28,8 @@ Types of changes for quick reminder.
 - Fragments setup: `AddPostcardFragment`,`GalleryFragment`, `HomeFragment`,`PostcardDetailsFragment`
 - Res/navigation nav_graph.xml
 - Res/menu bottom_nav_menu.xml
-- Drawable/ some icons
+- Res/layout: home_fragment.xml
+- Drawable/ some icons, background image
 - Dependencies
   - Navigation
 
