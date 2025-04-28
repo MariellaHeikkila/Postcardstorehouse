@@ -32,6 +32,8 @@ Types of changes for quick reminder.
 - Drawable/ some icons, background image
 - Dependencies
   - Navigation
+- Controllers:
+  - `NavigationController`
 
 ## [0.1.0] - 2025-04-13
 ### Added

@@ -9,9 +9,9 @@ import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.fragment.NavHostFragment;
 
 import com.maalelan.postcardstorehouse.R;
+import com.maalelan.postcardstorehouse.controllers.NavigationController;
 
 /**
  * HomeFragment serves as the initial screen of the application.
@@ -55,11 +55,11 @@ public void onViewCreated(@NonNull View view,
     Button addButton = view.findViewById(R.id.button_add);
     Button galleryButton = view.findViewById(R.id.button_gallery);
 
-    // Set click listener for the Add button to navigate to the Add screen
-    addButton.setOnClickListener(v ->
-            NavHostFragment.findNavController(this).navigate(R.id.navigation_add));
-    // Set click listener for the Gallery button to navigate to the Gallery screen
-    galleryButton.setOnClickListener(v ->
-            NavHostFragment.findNavController(this).navigate(R.id.navigation_gallery));
+    // Get navigation controller instance
+    NavigationController navController = NavigationController.getInstance();
+
+    // Set click listeners that use the navigation controller
+    addButton.setOnClickListener(v -> navController.navigateToAdd(this));
+    galleryButton.setOnClickListener(v -> navController.navigateToGallery(this));
 }
 }
