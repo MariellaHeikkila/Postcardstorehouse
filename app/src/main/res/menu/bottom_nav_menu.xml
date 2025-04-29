@@ -8,8 +8,4 @@
         android:id="@+id/navigation_add"
         android:icon="@drawable/ic_add"
         android:title="Add" />
-    <item
-        android:id="@+id/navigation_favorites"
-        android:icon="@drawable/ic_favorite"
-        android:title="Favorites" />
 </menu>

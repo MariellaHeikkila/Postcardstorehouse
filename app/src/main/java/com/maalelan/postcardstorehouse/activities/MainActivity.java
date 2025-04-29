@@ -32,17 +32,17 @@ public class MainActivity extends AppCompatActivity {
                 getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
 
         // Ensure that the NavHostFragment was successfully found before accessing its NavController
-        if(navHostFragment != null) {
+        if(navHostFragment != null && bottomNav != null) {
             // Obtain the NavController from the NavHostFragment.
             // NavController manages the app navigation.
             NavController navController = navHostFragment.getNavController();
 
-            // Link the BottomNavigationView with the NavController.
-            // This enables automated navigation handling when the user selects
-            // an item from the bottom navigation bar.
-            NavigationUI.setupWithNavController(bottomNav, navController);
+                // Link the BottomNavigationView with the NavController.
+                // This enables automated navigation handling when the user selects
+                // an item from the bottom navigation bar.
+                NavigationUI.setupWithNavController(bottomNav, navController);
         } else {
-            Log.e("MainActivity", "NavHostFragment not found. Cannot set up navigation.");
+            Log.e("MainActivity", "NavHostFragment / bottomNav is null.");
         }
     }
 }

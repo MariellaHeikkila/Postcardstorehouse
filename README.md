@@ -6,6 +6,12 @@ It allows you to digitally document, organize, and browse your postcard collecti
 _This app was born from a client need to better manage growing postcard collection. 
 It aims to be simple, offline-first, and tailored for collectors who value visual documentation._
 
+## Preview
+<div style="display: flex; gap: 10px; align-items: flex-start;">
+  <img src="documentation/photos/landingscreen.jpg" alt="Home screen" style="max-height:150px;">
+  <img src="documentation/photos/addpostcardscreen.jpg" alt="Add postcard screen" style="max-height:150px;">
+</div>
+
 ## Features
 
 - **Postcard saving**: Take photos of postcards using your device's camera or select images from your gallery
@@ -17,6 +23,7 @@ It aims to be simple, offline-first, and tailored for collectors who value visua
     - Theme/topic
     - Notes
     - Favorite
+    - Is sent by user
     - Photos
 - **Browsing and search**: Browse postcards in a visual gallery view
 - **Filtering**: Filter postcards by country, theme, date, and other attributes
@@ -94,6 +101,4 @@ app/
 
 ## Contact
 
-If you have questions or would like to contribute, feel free to get in touch:
-- Email: 
-- GitHub: 
+If you have questions or would like to contribute, feel free to get in touch via GitHub 

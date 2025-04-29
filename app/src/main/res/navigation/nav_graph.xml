@@ -19,9 +19,4 @@
         android:name="com.maalelan.postcardstorehouse.fragments.AddPostcardFragment"
         android:label="Add" />
 
-    <fragment
-        android:id="@+id/navigation_favorites"
-        android:name="com.maalelan.postcardstorehouse.fragments.PostcardDetailsFragment"
-        android:label="Favorites" />
-
 </navigation>

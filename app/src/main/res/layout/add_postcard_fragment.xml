@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="#CCFFFFFF"> <!-- 80% transparent -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+
+        <!-- Photo Preview with Placeholder -->
+        <ImageView
+            android:id="@+id/image_preview"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_camera_placeholder"
+            android:scaleType="centerCrop"
+            android:contentDescription="Photo preview"/>
+
+        <!-- Button to add or take photo -->
+        <Button
+            android:id="@+id/button_add_photo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Take a picture, it´ll last longer"
+            android:layout_marginTop="8dp"/>
+
+        <!-- Sent Date -->
+        <EditText
+            android:id="@+id/edit_sent_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Sent date"
+            android:focusable="false"
+            android:clickable="true"
+            android:inputType="none"/>
+
+        <!-- Received Date -->
+        <EditText
+            android:id="@+id/edit_received_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Received date"
+            android:focusable="false"
+            android:clickable="true"
+            android:inputType="none"/>
+
+        <!-- Country of origin -->
+        <EditText
+            android:id="@+id/edit_country"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Country of origin"
+            android:inputType="textCapWords"/>
+
+        <!-- Theme / Topic as EditText -->
+        <EditText
+            android:id="@+id/edit_topic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Theme / Topic"
+            android:inputType="text"/>
+
+        <!-- if dropdown, could be something like:
+        <Spinner
+            android:id="@+id/spinner_topic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        -->
+
+        <!-- Notes -->
+        <EditText
+            android:id="@+id/edit_notes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Notes"
+            android:inputType="textMultiLine"
+            android:minLines="3"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp"
+            android:gravity="center_horizontal">
+        <!-- Favorite Checkbox -->
+        <CheckBox
+            android:id="@+id/checkbox_favorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mark as favorite"/>
+
+        <!-- isSentByUser -->
+        <CheckBox
+            android:id="@+id/checkbox_is_sent_by_user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sent by me"/>
+
+        </LinearLayout>
+
+        <!-- Save button -->
+        <Button
+            android:id="@+id/button_save"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Save Postcard"
+            android:layout_marginTop="16dp"/>
+
+
+    </LinearLayout>
+
+</ScrollView>
+
