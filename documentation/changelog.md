@@ -15,6 +15,12 @@ Types of changes for quick reminder.
 
 
 ## [Unreleased]
+
+### Changed
+- Refactored application architecture from MVC to MVVM pattern (in progress)
+- Introduced ViewModel and Repository layers for better separation of concerns (in progress)
+- Modified project structure to reflect partial migration to MVVM (in progress)
+
 ### Added
 - Initial project structure defined
 - `README.md` created with project description and folder overview

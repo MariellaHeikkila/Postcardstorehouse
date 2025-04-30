@@ -4,6 +4,9 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.ColumnInfo;
 
+/**
+ *  Data model for Room
+ */
 @Entity(tableName = "postcards")
 public class PostcardEntity {
 

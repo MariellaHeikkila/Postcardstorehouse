@@ -43,6 +43,9 @@ dependencies {
     implementation libs.room.runtime
     annotationProcessor libs.room.compiler
 
+    // Livedata
+    implementation libs.lifecycle.livedata
+
     // Images
     implementation libs.glide
 
