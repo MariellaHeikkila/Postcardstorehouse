@@ -8,8 +8,8 @@ It aims to be simple, offline-first, and tailored for collectors who value visua
 
 ## Preview
 <div style="display: flex; gap: 10px; align-items: flex-start;">
-  <img src="documentation/photos/landingscreen.jpg" alt="Home screen" style="max-width: 20%;">
-  <img src="documentation/photos/addpostcardscreen.jpg" alt="Add postcard screen" style="max-width: 20%;">
+  <img src="documentation/photos/landingscreen.jpg" alt="Home screen" width="200">
+  <img src="documentation/photos/addpostcardscreen.jpg" alt="Add postcard screen" width="200">
 </div>
 
 ## Features

@@ -1,6 +1,8 @@
 package com.maalelan.postcardstorehouse.navigation;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.LiveData;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDirections;
 import androidx.navigation.fragment.NavHostFragment;
@@ -39,5 +41,35 @@ public class NavigationManager {
         navController.navigate(directions);
     }
 
+    /**
+     * Navigare to a destination by resource ID
+     * @param fragment The current fragment
+     * @param destinationId The destination resource ID
+     */
+    public void navigate(Fragment fragment, int destinationId) {
+        NavController navController = NavHostFragment.findNavController(fragment);
+        navController.navigate(destinationId);
+    }
 
+    /**
+     * Navigate back
+     * @param fragment The current fragment
+     */
+    public void navigateBack(Fragment fragment) {
+        NavController navController = NavHostFragment.findNavController(fragment);
+        navController.navigateUp();
+    }
+
+    /**
+     * Set up navigation events observer for a fragment
+     * @param fragment The fragment to observe navigation events
+     * @param lifecycleOwner the lifecycle owner ( the fragments viewlifecycleOwner)
+     * @param navigationEvents The navigation events LiveData from ViewModel
+     */
+    public void setupNavigationObserver(
+            Fragment fragment,
+            LifecycleOwner lifecycleOwner,
+            LiveData<NavigationEvent> navigationEvents) {
+
+    }
 }
