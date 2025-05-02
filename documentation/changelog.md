@@ -18,6 +18,7 @@ Types of changes for quick reminder.
 
 ### Changed
 - Refactored application architecture from MVC to MVVM pattern (in progress)
+  - Navigation and HomeFragment changed
 - Introduced ViewModel and Repository layers for better separation of concerns (in progress)
 - Modified project structure to reflect partial migration to MVVM (in progress)
 
