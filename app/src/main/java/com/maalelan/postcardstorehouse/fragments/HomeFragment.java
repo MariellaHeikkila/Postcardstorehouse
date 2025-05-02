@@ -9,9 +9,11 @@ import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.maalelan.postcardstorehouse.R;
-import com.maalelan.postcardstorehouse.controllers.NavigationController;
+import com.maalelan.postcardstorehouse.navigation.NavigationManager;
+import com.maalelan.postcardstorehouse.viewmodels.HomeViewModel;
 
 /**
  * HomeFragment serves as the initial screen of the application.
@@ -19,6 +21,7 @@ import com.maalelan.postcardstorehouse.controllers.NavigationController;
  */
 public class HomeFragment extends Fragment {
 
+    private HomeViewModel viewModel;
 
     /**
      * Inflates the layout for this fragment.
@@ -51,15 +54,20 @@ public void onViewCreated(@NonNull View view,
                           @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
 
+    viewModel = new ViewModelProvider(this).get(HomeViewModel.class);
+
+    NavigationManager.getInstance().setupNavigationObserver(
+            this,
+            getViewLifecycleOwner(),
+            viewModel.getNavigationEvent()
+    );
+
     // Find navigation buttons from the layout
     Button addButton = view.findViewById(R.id.button_add);
     Button galleryButton = view.findViewById(R.id.button_gallery);
 
-    // Get navigation controller instance
-    NavigationController navController = NavigationController.getInstance();
-
     // Set click listeners that use the navigation controller
-    addButton.setOnClickListener(v -> navController.navigateToAdd(this));
-    galleryButton.setOnClickListener(v -> navController.navigateToGallery(this));
+    addButton.setOnClickListener(v -> viewModel.navigateToAdd());
+    galleryButton.setOnClickListener(v -> viewModel.navigateToGallery());
 }
 }

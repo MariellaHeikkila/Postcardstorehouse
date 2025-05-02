@@ -7,6 +7,8 @@ import androidx.navigation.NavController;
 import androidx.navigation.NavDirections;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.maalelan.postcardstorehouse.utils.Event;
+
 /**
  * Navigation manager for the MVVM architecture.
  * This class handles navigation actions while maintaining separation
@@ -69,7 +71,40 @@ public class NavigationManager {
     public void setupNavigationObserver(
             Fragment fragment,
             LifecycleOwner lifecycleOwner,
-            LiveData<NavigationEvent> navigationEvents) {
+            LiveData<Event<NavigationEvent>> navigationEvents) {
+
+        navigationEvents.observe(lifecycleOwner, event -> {
+            if (event != null) {
+                // Handle the navigation event only once
+                NavigationEvent navigationEvent = event.getContentIfNotHandled();
+                if (navigationEvent != null) {
+                    handleNavigationEvent(fragment, navigationEvent);
+                }
+            }
+        });
+    }
+
+    /**
+     * Handle a navigation event
+     * @param fragment The fragment to navigate from
+     * @param navigationEvent The navigation event to handle
+     */
+    private void handleNavigationEvent(Fragment fragment, NavigationEvent navigationEvent) {
+        NavController navController = NavHostFragment.findNavController(fragment);
+
+        if (navigationEvent instanceof NavigationEvent.ToDestination) {
+            navController.navigate(((NavigationEvent.ToDestination) navigationEvent).getDestinationId());
+        }
+        if (navigationEvent instanceof NavigationEvent.ToDirection) {
+            navController.navigate(((NavigationEvent.ToDirection) navigationEvent).getDirections());
+        }
+        if (navigationEvent instanceof NavigationEvent.Back) {
+            navController.navigateUp();
+        }
+        if (navigationEvent instanceof NavigationEvent.BackToDestination) {
+            navController.popBackStack(
+                    ((NavigationEvent.BackToDestination) navigationEvent).getDestinationId(), false);
+        }
 
     }
 }

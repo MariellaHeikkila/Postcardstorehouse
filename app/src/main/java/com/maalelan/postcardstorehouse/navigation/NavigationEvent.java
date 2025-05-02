@@ -9,7 +9,7 @@ import androidx.navigation.NavDirections;
 public abstract class NavigationEvent {
 
     /**
-     * Navigate to a spesific destination by ID
+     * Navigate to a specific destination by ID
      */
     public static class ToDestination extends NavigationEvent {
         private final int destinationId;
@@ -18,7 +18,7 @@ public abstract class NavigationEvent {
             this.destinationId = destinationId;
         }
 
-        public int getDestinationID() {
+        public int getDestinationId() {
             return destinationId;
         }
     }

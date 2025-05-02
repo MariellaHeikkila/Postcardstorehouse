@@ -69,4 +69,12 @@ public class MainActivity extends AppCompatActivity {
             Log.e("MainActivity", "NavHostFragment / bottomNav is null.");
         }
     }
+
+    /**
+     * Handle Up button presses
+     */
+    @Override
+    public boolean onSupportNavigateUp() {
+        return navController.navigateUp() || super.onSupportNavigateUp();
+    }
 }
