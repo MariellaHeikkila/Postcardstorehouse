@@ -6,7 +6,7 @@ public class Postcard {
 
     private int id;
     private String country;
-    private String theme;
+    private String topic;
     private Date sentDate;
     private Date receivedDate;
     private String notes;
@@ -18,16 +18,22 @@ public class Postcard {
     }
 
     //Constructor with params
-    public Postcard(int id, String country, String theme, Date sentDate, Date receivedDate,
+    public Postcard(int id, String country, String topic, Date sentDate, Date receivedDate,
                     String notes, boolean isFavorite, boolean isSentByUser) {
         this.id = id;
         this.country = country;
-        this.theme = theme;
+        this.topic = topic;
         this.sentDate = sentDate;
         this.receivedDate = receivedDate;
         this.notes = notes;
         this.isFavorite = isFavorite;
         this.isSentByUser = isSentByUser;
+    }
+
+    // Constructor without id, used in AddPostcardFragment for adding new postcard
+    public Postcard(String country, String topic, Date sentDate, Date receivedDate,
+                    String notes, boolean isFavorite, boolean isSentByUser) {
+        this(-1, country,topic,sentDate, receivedDate, notes, isFavorite, isSentByUser);
     }
 
     //Getters and setters
@@ -48,10 +54,10 @@ public class Postcard {
     }
 
     public String getTheme() {
-        return theme;
+        return topic;
     }
     public void setTheme(String theme) {
-        this.theme = theme;
+        this.topic = topic;
     }
 
     public Date getSentDate() {
