@@ -10,7 +10,7 @@ import com.maalelan.postcardstorehouse.models.database.dao.PostcardDao;
 import com.maalelan.postcardstorehouse.models.database.entities.PostcardEntity;
 import com.maalelan.postcardstorehouse.models.database.migrations.Migration1to2;
 
-@Database(entities = {PostcardEntity.class}, version = 1)
+@Database(entities = {PostcardEntity.class}, version = 2)
 public abstract class PostcardDatabase extends RoomDatabase {
 
     //DAO-method
@@ -25,6 +25,7 @@ public abstract class PostcardDatabase extends RoomDatabase {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             PostcardDatabase.class, "postcard_database")
+                            .fallbackToDestructiveMigration()
                             //.addMigrations(new Migration1to2()) // for now no need for this
                             .build();
                 }

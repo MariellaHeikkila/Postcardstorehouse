@@ -24,7 +24,7 @@ public class PostcardMapper {
     public static PostcardEntity toEntity(Postcard postcard) {
         return new PostcardEntity(
                 postcard.getCountry(),
-                postcard.getTheme(),
+                postcard.getTopic(),
                 sdf.format(postcard.getSentDate()),
                 sdf.format(postcard.getReceivedDate()),
                 postcard.getNotes(),
@@ -45,7 +45,7 @@ public class PostcardMapper {
         //Set basic attributes directly from the entity
         postcard.setId((entity.getId()));
         postcard.setCountry(entity.getCountry());
-        postcard.setTheme(entity.getTheme());
+        postcard.setTopic(entity.getTopic());
 
         // Try parsing string-formatted dates into Date objects
         try {
