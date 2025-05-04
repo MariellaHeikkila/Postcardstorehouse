@@ -53,10 +53,10 @@ public class Postcard {
         this.country = country;
     }
 
-    public String getTheme() {
+    public String getTopic() {
         return topic;
     }
-    public void setTheme(String theme) {
+    public void setTopic(String theme) {
         this.topic = topic;
     }
 

@@ -41,6 +41,7 @@ dependencies {
 
     // Room-database
     implementation libs.room.runtime
+    implementation libs.recyclerview
     annotationProcessor libs.room.compiler
 
     // Livedata

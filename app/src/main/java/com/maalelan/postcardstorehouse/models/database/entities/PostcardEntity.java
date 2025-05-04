@@ -16,8 +16,8 @@ public class PostcardEntity {
     @ColumnInfo(name = "country")
     private String country;
 
-    @ColumnInfo(name = "theme")
-    private String theme;
+    @ColumnInfo(name = "topic")
+    private String topic;
 
     @ColumnInfo(name = "sent_date")
     private String sentDate;
@@ -38,10 +38,10 @@ public class PostcardEntity {
 
     public PostcardEntity(){
     }
-    public PostcardEntity(String country, String theme, String sentDate, String receivedDate,
+    public PostcardEntity(String country, String topic, String sentDate, String receivedDate,
                           String notes, boolean isFavorite, boolean isSentByUser) {
         this.country = country;
-        this.theme = theme;
+        this.topic = topic;
         this.sentDate = sentDate;
         this.receivedDate = receivedDate;
         this.notes = notes;
@@ -66,12 +66,12 @@ public class PostcardEntity {
         this.country = country;
     }
 
-    public void setTheme(String theme) {
-        this.theme = theme;
+    public void setTopic(String topic) {
+        this.topic = topic;
     }
 
-    public String getTheme() {
-        return theme;
+    public String getTopic() {
+        return topic;
     }
 
     public String getSentDate() {

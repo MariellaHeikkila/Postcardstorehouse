@@ -22,7 +22,7 @@ public class PostcardRepository {
     private final PostcardDatabase postcardDatabase;
 
     /**
-     * Initialize the reposotpry and database instance.
+     * Initialize the repository and database instance.
      * @param context Application context
      */
     public PostcardRepository(Context context) {
