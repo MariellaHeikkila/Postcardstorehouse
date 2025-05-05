@@ -17,15 +17,18 @@ Types of changes for quick reminder.
 ## [Unreleased]
 
 ### Changed
-- Refactored application architecture from MVC to MVVM pattern (in progress)
-  - Navigation and HomeFragment changed
-- Introduced ViewModel and Repository layers for better separation of concerns (in progress)
-- Modified project structure to reflect partial migration to MVVM (in progress)
+- Refactored application architecture from MVC to MVVM pattern
+  - Navigation and HomeFragment updated
+- Introduced `ViewModel` and `Repository` layers for better separation of concerns
+- Room database:
+- Field renamed from `theme` to `topic` in `PostcardEntity`
+  - Database version increased to `2`
 
 ### Added
 - Initial project structure defined
 - `README.md` created with project description and folder overview
 - `troubleshooting.md` created with first issues
+- `pcsh-architecture.md` created with application architecture
 - Postcard data model (`Postcard.java`) created
 - PostcardImage data model (`PostcardImage.java`) created
 - Room database setup: `PostcardEntity`, `PostcardDao`, and `PostcardDatabase`
@@ -39,8 +42,10 @@ Types of changes for quick reminder.
 - Drawable/ some icons, background image
 - Dependencies
   - Navigation
-- Controllers:
-  - `NavigationController`
+
+
+### Removed
+- Legacy MVC Controllers (e.g., `NavigationController`)
 
 ## [0.1.0] - 2025-04-13
 ### Added

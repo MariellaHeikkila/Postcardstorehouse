@@ -57,44 +57,20 @@ app/
 │   ├── main/
 │   │   ├── java/com/maalelan/postcardstorehouse/
 │   │   │   ├── activities/                         # Activities
-│   │   │   │   └── MainActivity.java               # Host activity for fragments & bottom nav
+│   │   │   ├── adapters/                           # 
 │   │   │   ├── fragments/                          # UI fragments (View layer)
-│   │   │   │   ├── HomeFragment.java               # Home / Landing page
-│   │   │   │   ├── GalleryFragment.java            # Postcard gallery list
-│   │   │   │   ├── AddPostcardFragment.java        # Form to add (/edit old..) a new postcard
-│   │   │   │   └── DetailsFragment.java            # View/edit details of selected postcard
 |   |   |   ├── viewmodels/                         # ViewModel layer
-│   │   │   │   ├── PostcardViewModel.java          # Manages UI-related postcard data
-│   │   │   │   ├── GalleryViewModel.java           # Manages gallery presentation logic
-│   │   │   │   └── ImageViewModel.java             # Manages image-related operations
 │   │   │   ├── repositories/                       # Repository layer
-│   │   │   │   ├── PostcardRepository.java         # Data source abstraction
-│   │   │   │   └── ImageRepository.java            # Image storage abstraction
 │   │   │   ├── models/                             # Data models (Model layer)
-│   │   │   │   ├── Postcard.java                   # Data model for business logic
-│   │   │   │   ├── PostcardImage.java              # Data model for business logic
 │   │   │   │   └── database/                       # Database operations and entities
 │   │   │   │       ├── entities/ 
-│   │   │   │       │   └── PostcardEntity.java     # Room Entity
-│   │   │   │       ├── dao/
-│   │   │   │       │   └── PostcardDao.java        # DAO (Data Access Object)
-│   │   │   │       └── PostcardDatabase.java       # Room Database
+│   │   │   │       └── dao/
 │   │   │   ├── navigation/                         # Navigation
-│   │   │   │   ├── NavigationManager.java          # 
-│   │   │   │   └── NavigationEvent.java            # 
 │   │   │   └── utils/                              # Helper classes
-|   │   │       ├── DateUtils.java                  # Date formatting, etc.
-|   │   │       ├── Event.java                      # Navigation
-│   │   │       ├── ImageUtils.java                 # Image processing functions
-│   │   │       ├── InputValidator.java             # checks input formats, return true/false/error msg
-│   │   │       ├── PostcardMapper.java             # POJO <-> Entity
-│   │   │       └── PostcardFilterHelper.java       # Filtering logic
 │   │   └── res/                                    # Resources
 │   │       ├── layout/                             # Fragment/activity layouts
 │   │       ├── menu/                               # Menu resources (e.g., bottom nav items)
-│   │       │   └── bottom_nav_menu.xml             # Bottom nav config
 │   │       ├── navigation/                         # Navigation graph
-│   │       │   └── nav_graph.xml                   # Defines fragment destinations
 │   │       └── values/                             # Strings, colors, themes, etc.
 └── build.gradle                                    # Gradle-config.
 ```
