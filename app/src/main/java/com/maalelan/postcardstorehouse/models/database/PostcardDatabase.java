@@ -7,14 +7,17 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
 import com.maalelan.postcardstorehouse.models.database.dao.PostcardDao;
+import com.maalelan.postcardstorehouse.models.database.dao.PostcardImageDao;
 import com.maalelan.postcardstorehouse.models.database.entities.PostcardEntity;
+import com.maalelan.postcardstorehouse.models.database.entities.PostcardImageEntity;
 import com.maalelan.postcardstorehouse.models.database.migrations.Migration1to2;
 
-@Database(entities = {PostcardEntity.class}, version = 2)
+@Database(entities = {PostcardEntity.class, PostcardImageEntity.class}, version = 2)
 public abstract class PostcardDatabase extends RoomDatabase {
 
     //DAO-method
     public  abstract PostcardDao postcardDao();
+    public abstract PostcardImageDao postcardImageDao();
 
     // Singleton design pattern
     private static PostcardDatabase INSTANCE;

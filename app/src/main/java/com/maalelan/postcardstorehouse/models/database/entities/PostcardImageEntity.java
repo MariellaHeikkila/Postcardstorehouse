@@ -18,6 +18,7 @@ import androidx.room.PrimaryKey;
 public class PostcardImageEntity {
 
     @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id")
     public int id;
 
     @ColumnInfo(name = "postcard_id", index = true)

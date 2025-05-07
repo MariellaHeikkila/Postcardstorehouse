@@ -6,8 +6,10 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Transformations;
 
 import com.maalelan.postcardstorehouse.models.Postcard;
+import com.maalelan.postcardstorehouse.models.PostcardImage;
 import com.maalelan.postcardstorehouse.models.database.PostcardDatabase;
 import com.maalelan.postcardstorehouse.models.database.entities.PostcardEntity;
+import com.maalelan.postcardstorehouse.models.database.entities.PostcardImageEntity;
 import com.maalelan.postcardstorehouse.utils.PostcardMapper;
 
 import java.util.ArrayList;
@@ -28,6 +30,8 @@ public class PostcardRepository {
     public PostcardRepository(Context context) {
         postcardDatabase = PostcardDatabase.getDatabase(context);
     }
+
+    //== POSTCARD METHODS ==
 
     /**
      * Retrieves all postcards from the database as LiveData.
@@ -64,4 +68,25 @@ public class PostcardRepository {
         PostcardEntity entity = PostcardMapper.toEntity(postcard);
         new Thread(() -> postcardDatabase.postcardDao().updatePostcard(entity)).start();
     }
+
+    //== POSTCARD IMAGES METHODS
+
+    /**
+     * Retrieves all images related to a specific postcard as a LiveData list.
+     * @param postcardId The ID of the postcard whose images are to be fetched
+     * @return Livedata containing a list of PostcardImage objects
+     */
+    public LiveData<List<PostcardImage>> getImagesForPostcard(int postcardId) {
+        return Transformations.map(
+                postcardDatabase.postcardImageDao().getImagesForPostcard(postcardId),
+                entities -> {
+                    List<PostcardImage> images = new ArrayList<>();
+                    for (PostcardImageEntity entity : entities) {
+                        // images.add(Continue Mapperstuff here);
+                    }
+                    return images;
+                }
+        );
+    }
+
 }

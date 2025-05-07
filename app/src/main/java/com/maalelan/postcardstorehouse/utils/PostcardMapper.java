@@ -1,7 +1,9 @@
 package com.maalelan.postcardstorehouse.utils;
 
 import com.maalelan.postcardstorehouse.models.Postcard;
+import com.maalelan.postcardstorehouse.models.PostcardImage;
 import com.maalelan.postcardstorehouse.models.database.entities.PostcardEntity;
+import com.maalelan.postcardstorehouse.models.database.entities.PostcardImageEntity;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -63,6 +65,21 @@ public class PostcardMapper {
         postcard.setSentByUser(entity.isSentByUser());
 
         return postcard;
+    }
+
+    /**
+     * Converts a PostcardImage POJO into a PostcardImageEntity
+     * suitable for Room database storage
+     * @param image the PostcardImage object from the app logic
+     * @return a PostcardImageEntity for Room persistence
+     */
+    public static PostcardEntity toEntity(PostcardImage image) {
+        PostcardImageEntity entity = new PostcardImageEntity();
+        entity.setId(image.getId());
+        entity.setPostcardId(image.getPostcardId());
+        entity.setTagName(image.getTagName());
+        entity.setImageUri(image.getImageUri());
+        return entity;
     }
 
 }
