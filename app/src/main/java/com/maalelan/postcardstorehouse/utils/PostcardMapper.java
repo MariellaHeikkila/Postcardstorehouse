@@ -73,7 +73,7 @@ public class PostcardMapper {
      * @param image the PostcardImage object from the app logic
      * @return a PostcardImageEntity for Room persistence
      */
-    public static PostcardEntity toEntity(PostcardImage image) {
+    public static PostcardImageEntity toEntity(PostcardImage image) {
         PostcardImageEntity entity = new PostcardImageEntity();
         entity.setId(image.getId());
         entity.setPostcardId(image.getPostcardId());
@@ -81,6 +81,22 @@ public class PostcardMapper {
         entity.setImageUri(image.getImageUri());
         return entity;
     }
+
+    /**
+     * Converts a PostcardImageEntity from the Room db into a
+     * PostcardImage POJO
+     * @param entity the Room entity representing a postcard img
+     * @return a PostcardImage object for use in the app
+     */
+    public static PostcardImage fromEntity(PostcardImageEntity entity) {
+        PostcardImage image = new PostcardImage();
+        image.setId(entity.getId());
+        image.setPostcardId(entity.getPostcardId());
+        image.setTagName(entity.getTagName());
+        image.setImageUri(entity.getImageUri());
+        return image;
+    }
+
 
 }
 

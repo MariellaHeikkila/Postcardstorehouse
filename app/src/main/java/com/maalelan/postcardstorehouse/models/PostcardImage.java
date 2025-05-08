@@ -10,6 +10,12 @@ public class PostcardImage {
     public PostcardImage() {
     }
 
+    public PostcardImage(int postcardId, String tagName, String imageUri) {
+        this.postcardId = postcardId;
+        this.tagName = tagName;
+        this.imageUri = imageUri;
+    }
+
     public PostcardImage(int id, int postcardId, String tagName, String imageUri) {
         this.id = id;
         this.postcardId = postcardId;

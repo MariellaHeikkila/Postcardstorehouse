@@ -7,6 +7,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.maalelan.postcardstorehouse.models.Postcard;
+import com.maalelan.postcardstorehouse.models.PostcardImage;
 import com.maalelan.postcardstorehouse.repositories.PostcardRepository;
 
 import java.util.List;
@@ -53,4 +54,35 @@ public class PostcardViewModel extends AndroidViewModel {
     public void updatePostcard(Postcard postcard) {
         repository.updatePostcard(postcard);
     }
+
+    // == IMAGE related methods
+
+    /**
+     * Gets all images related to a specific postcard ID.
+     * @param postcardId The postcard ID
+     * @return LiveData list of related images
+     */
+    public LiveData<List<PostcardImage>> getImagesForPostcard(int postcardId) {
+        return repository.getImagesForPostcard(postcardId);
+    }
+
+    /**
+     * Saves a postcard image to the database
+     * @param postcardId The ID of the related postcard
+     * @param tagName Tag describing the image type
+     * @param imageUri The URI of the image
+     */
+    public void addPostcardImage(int postcardId, String tagName, String imageUri) {
+        PostcardImage image = new PostcardImage(postcardId, tagName, imageUri);
+        repository.addPostcardImage(image);
+    }
+
+    /**
+     * Delete a specific postcard image from the db
+     * @param image The image to be deleted
+     */
+    public void deletePostcardImage(PostcardImage image) {
+        repository.deleteImage(image);
+    }
+
 }

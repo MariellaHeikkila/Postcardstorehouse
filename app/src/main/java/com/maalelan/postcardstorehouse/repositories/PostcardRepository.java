@@ -82,11 +82,30 @@ public class PostcardRepository {
                 entities -> {
                     List<PostcardImage> images = new ArrayList<>();
                     for (PostcardImageEntity entity : entities) {
-                        // images.add(Continue Mapperstuff here);
+                        images.add(PostcardMapper.fromEntity(entity));
                     }
                     return images;
                 }
         );
+    }
+
+    /**
+     * Inserts a new image linked to a postcard, into the database
+     * on a background thread.
+     * @param image The PostcardImage object to insert
+     */
+    public void addPostcardImage(PostcardImage image) {
+        PostcardImageEntity entity = PostcardMapper.toEntity(image);
+        new Thread(() -> postcardDatabase.postcardImageDao().insert(entity)).start();
+    }
+
+    /**
+     * Deletes an image from the database on a background thread.
+     * @param image The PostcardImage object to delete
+     */
+    public void deleteImage(PostcardImage image) {
+        PostcardImageEntity entity = PostcardMapper.toEntity(image);
+        new Thread(() -> postcardDatabase.postcardImageDao().delete(entity)).start();
     }
 
 }
