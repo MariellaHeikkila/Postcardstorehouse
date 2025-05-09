@@ -1,17 +1,27 @@
 package com.maalelan.postcardstorehouse.fragments;
 
+import android.Manifest;
+import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -36,7 +46,11 @@ public class AddPostcardFragment extends Fragment {
     // UI components
     private EditText editSentDate, editReceivedDate, editCountry, editTopic, editNotes;
     private CheckBox checkboxFavorite, checkboxIsSentByUser;
-    private Button buttonSave;
+    private Button buttonSave, buttonAddPhoto;
+
+    private static final int REQUEST_IMAGE_CAPTURE = 1;
+    private static final int REQUEST_CAMERA_PERMISSION = 2;
+    private ImageView imagePreview;
 
     @Nullable
     @Override
@@ -64,6 +78,10 @@ public class AddPostcardFragment extends Fragment {
         checkboxFavorite = view.findViewById(R.id.checkbox_favorite);
         checkboxIsSentByUser = view.findViewById(R.id.checkbox_is_sent_by_user);
         buttonSave = view.findViewById(R.id.button_save);
+        buttonAddPhoto = view.findViewById(R.id.button_add_photo);
+        imagePreview = view.findViewById(R.id.image_preview);
+
+        buttonAddPhoto.setOnClickListener(v -> askCameraPermission());
 
         editSentDate.setOnClickListener(v -> showDatePicker(editSentDate));
         editReceivedDate.setOnClickListener(v -> showDatePicker(editReceivedDate));
@@ -71,6 +89,53 @@ public class AddPostcardFragment extends Fragment {
         // Handle save button click
         buttonSave.setOnClickListener(v -> savePostcard());
 
+    }
+
+    private void askCameraPermission() {
+        if (ContextCompat.checkSelfPermission(requireContext(),
+                Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(requireActivity(),
+                    new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA_PERMISSION);
+        } else {
+            openCamera();
+        }
+    }
+
+    private void openCamera() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        try {
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+        } catch (ActivityNotFoundException e) {
+            Toast.makeText(getContext(), "Kameraa ei löydy", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                          @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == REQUEST_CAMERA_PERMISSION) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                openCamera();
+            } else {
+                Toast.makeText(getContext(), "Kameran käyttöoikeus tarvitaan kuvan ottamiseen", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode,resultCode, data);
+
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK && data != null) {
+            Toast.makeText(getContext(), "Kuva otettu!", Toast.LENGTH_SHORT).show();
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            if (imageBitmap != null) {
+                imagePreview.setImageBitmap(imageBitmap);
+            }
+        }
     }
 
     /**

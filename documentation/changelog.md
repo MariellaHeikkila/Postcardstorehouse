@@ -29,9 +29,8 @@ Types of changes for quick reminder.
 - `README.md` created with project description and folder overview
 - `troubleshooting.md` created with first issues
 - `pcsh-architecture.md` created with application architecture
-- Postcard data model (`Postcard.java`) created
-- PostcardImage data model (`PostcardImage.java`) created
-- Room database setup: `PostcardEntity`, `PostcardDao`, and `PostcardDatabase`
+- Data models: `Postcard.java`, `PostcardImage.java` created
+- Room database setup: `PostcardEntity`, `PostcardImageEntity`, `PostcardDao`, and `PostcardDatabase`
 - Room database .fallbackToDestructiveMigration() is deprecated 
   - -> migrations dir: `migration1to2`, for later use
 - Bottom navigation + UI fragments

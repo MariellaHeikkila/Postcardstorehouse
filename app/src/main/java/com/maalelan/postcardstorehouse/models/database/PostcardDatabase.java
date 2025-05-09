@@ -12,7 +12,7 @@ import com.maalelan.postcardstorehouse.models.database.entities.PostcardEntity;
 import com.maalelan.postcardstorehouse.models.database.entities.PostcardImageEntity;
 import com.maalelan.postcardstorehouse.models.database.migrations.Migration1to2;
 
-@Database(entities = {PostcardEntity.class, PostcardImageEntity.class}, version = 2)
+@Database(entities = {PostcardEntity.class, PostcardImageEntity.class}, version = 3)
 public abstract class PostcardDatabase extends RoomDatabase {
 
     //DAO-method
