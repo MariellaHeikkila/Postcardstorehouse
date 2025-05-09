@@ -7,7 +7,9 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,6 +32,8 @@ import com.maalelan.postcardstorehouse.models.Postcard;
 import com.maalelan.postcardstorehouse.utils.DateUtils;
 import com.maalelan.postcardstorehouse.viewmodels.PostcardViewModel;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -50,7 +54,10 @@ public class AddPostcardFragment extends Fragment {
 
     private static final int REQUEST_IMAGE_CAPTURE = 1;
     private static final int REQUEST_CAMERA_PERMISSION = 2;
-    private ImageView imagePreview;
+    private static final int REQUEST_STORAGE_PERMISSION =3;
+      private ImageView imagePreview;
+    private Bitmap capturedImage;
+    private boolean isPhotoTaken = false;
 
     @Nullable
     @Override
@@ -133,8 +140,43 @@ public class AddPostcardFragment extends Fragment {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             if (imageBitmap != null) {
-                imagePreview.setImageBitmap(imageBitmap);
+                imagePreview.setImageBitmap(imageBitmap); // sets preview image
+                capturedImage = imageBitmap;
             }
+        }
+    }
+
+    private String saveImageToGallery(Bitmap imageBitmap) {
+        File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+
+        // create directory if there is not
+        if (!storageDir.exists()) {
+            storageDir.mkdirs();
+        }
+
+        String timeStamp = DateUtils.format(new Date());
+        String fileName = "IMG" + timeStamp + ".jpg";
+
+        File imageFile = new File(storageDir, fileName);
+
+        try (FileOutputStream outputStream = new FileOutputStream(imageFile)) {
+
+            imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
+            outputStream.flush();
+            outputStream.close();
+
+            // update gallery
+            Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+            mediaScanIntent.setData(Uri.fromFile(imageFile));
+            requireContext().sendBroadcast(mediaScanIntent);
+
+            Toast.makeText(getContext(), "Kuvatallennus galleriaan onnistui", Toast.LENGTH_SHORT).show();
+
+            return imageFile.getAbsolutePath();
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(getContext(), "Kuvatallennus galleriaan epäonnistui", Toast.LENGTH_SHORT).show();
+            return null;
         }
     }
 
@@ -189,6 +231,11 @@ public class AddPostcardFragment extends Fragment {
                 isFavorite,
                 isSentByUser
         );
+
+        if (capturedImage != null) {
+            String imagePath = saveImageToGallery(capturedImage);
+
+        }
 
         // Save via ViewModel
         viewModel.addPostcard(postcard);
