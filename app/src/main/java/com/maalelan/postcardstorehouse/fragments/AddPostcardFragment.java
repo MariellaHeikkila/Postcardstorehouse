@@ -232,13 +232,15 @@ public class AddPostcardFragment extends Fragment {
                 isSentByUser
         );
 
+        // Save postcard and get the generated ID
+        long postcardId = viewModel.addPostcard(postcard);
+
         if (capturedImage != null) {
             String imagePath = saveImageToGallery(capturedImage);
 
         }
 
-        // Save via ViewModel
-        viewModel.addPostcard(postcard);
+
 
         Toast.makeText(requireContext(), "Postcard saved", Toast.LENGTH_SHORT).show();
 

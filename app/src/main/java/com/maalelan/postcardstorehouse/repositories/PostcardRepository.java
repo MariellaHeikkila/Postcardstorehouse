@@ -8,12 +8,15 @@ import androidx.lifecycle.Transformations;
 import com.maalelan.postcardstorehouse.models.Postcard;
 import com.maalelan.postcardstorehouse.models.PostcardImage;
 import com.maalelan.postcardstorehouse.models.database.PostcardDatabase;
+import com.maalelan.postcardstorehouse.models.database.dao.PostcardDao;
 import com.maalelan.postcardstorehouse.models.database.entities.PostcardEntity;
 import com.maalelan.postcardstorehouse.models.database.entities.PostcardImageEntity;
 import com.maalelan.postcardstorehouse.utils.PostcardMapper;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.function.Consumer;
 
 /**
  * Repository class that handles data operations for postcards.
@@ -55,10 +58,16 @@ public class PostcardRepository {
      * Inserts a new postcard into the database on a background thread.
      * @param postcard The Postcard object to insert
      */
-    public void addPostcard(Postcard postcard) {
-        PostcardEntity entity = PostcardMapper.toEntity(postcard);
-        new Thread(() -> postcardDatabase.postcardDao().insertPostcard(entity)).start();
+    public void addPostcard(Postcard postcard, Consumer<Long> callback) {
+        Executors.newSingleThreadExecutor().execute(() -> {
+            long id = PostcardDao.insertPostcard(PostcardMapper.toEntity(postcard));
+            callback.accept(id);
+        });
     }
+//    public void addPostcard(Postcard postcard) {
+//        PostcardEntity entity = PostcardMapper.toEntity(postcard);
+//        new Thread(() -> postcardDatabase.postcardDao().insertPostcard(entity)).start();
+//    }
 
     /**
      * Updates an existing postcard in the database on a background thread.
@@ -76,7 +85,7 @@ public class PostcardRepository {
      * @param postcardId The ID of the postcard whose images are to be fetched
      * @return Livedata containing a list of PostcardImage objects
      */
-    public LiveData<List<PostcardImage>> getImagesForPostcard(int postcardId) {
+    public LiveData<List<PostcardImage>> getImagesForPostcard(long postcardId) {
         return Transformations.map(
                 postcardDatabase.postcardImageDao().getImagesForPostcard(postcardId),
                 entities -> {

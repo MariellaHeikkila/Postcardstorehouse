@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class Postcard {
 
-    private int id;
+    private long id;
     private String country;
     private String topic;
     private Date sentDate;
@@ -18,7 +18,7 @@ public class Postcard {
     }
 
     //Constructor with params
-    public Postcard(int id, String country, String topic, Date sentDate, Date receivedDate,
+    public Postcard(long id, String country, String topic, Date sentDate, Date receivedDate,
                     String notes, boolean isFavorite, boolean isSentByUser) {
         this.id = id;
         this.country = country;
@@ -39,10 +39,10 @@ public class Postcard {
     //Getters and setters
 
 
-    public int getId() {
+    public long getId() {
         return id;
     }
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

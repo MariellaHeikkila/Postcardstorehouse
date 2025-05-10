@@ -19,10 +19,10 @@ public class PostcardImageEntity {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
-    public int id;
+    public long id;
 
     @ColumnInfo(name = "postcard_id", index = true)
-    public int postcardId;
+    public long postcardId;
 
     @ColumnInfo(name = "tag_name")
     public String tagName;
@@ -31,7 +31,7 @@ public class PostcardImageEntity {
     public String imageUri;
 
     public  PostcardImageEntity() {}
-    public PostcardImageEntity(int postcardId, String tagName, String imageUri) {
+    public PostcardImageEntity(long postcardId, String tagName, String imageUri) {
         this.postcardId = postcardId;
         this.tagName = tagName;
         this.imageUri = imageUri;
@@ -40,19 +40,19 @@ public class PostcardImageEntity {
     // Getters and Setters
 
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public int getPostcardId() {
+    public long getPostcardId() {
         return postcardId;
     }
 
-    public void setPostcardId(int postcardId) {
+    public void setPostcardId(long postcardId) {
         this.postcardId = postcardId;
     }
 

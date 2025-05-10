@@ -27,10 +27,10 @@ public interface PostcardImageDao {
     LiveData<List<PostcardImageEntity>> getAllImages();
 
     @Query("SELECT * FROM postcard_images WHERE postcard_id = :postcardId ORDER BY tag_name ASC")
-    LiveData<List<PostcardImageEntity>> getImagesForPostcard(int postcardId);
+    LiveData<List<PostcardImageEntity>> getImagesForPostcard(long postcardId);
 
     @Query("DELETE FROM postcard_images WHERE postcard_id = :postcardId") //delete all pc id related images
-    void deleteImagesByPostcardId(int postcardId);
+    void deleteImagesByPostcardId(long postcardId);
 
 
 }

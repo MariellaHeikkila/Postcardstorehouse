@@ -1,8 +1,8 @@
 package com.maalelan.postcardstorehouse.models;
 
 public class PostcardImage {
-    private int id;
-    private int postcardId;
+    private long id;
+    private long postcardId;
     private String tagName; //[front, back, postmark, stamp]
     private String imageUri; // uri path
 
@@ -10,13 +10,13 @@ public class PostcardImage {
     public PostcardImage() {
     }
 
-    public PostcardImage(int postcardId, String tagName, String imageUri) {
+    public PostcardImage(long postcardId, String tagName, String imageUri) {
         this.postcardId = postcardId;
         this.tagName = tagName;
         this.imageUri = imageUri;
     }
 
-    public PostcardImage(int id, int postcardId, String tagName, String imageUri) {
+    public PostcardImage(long id, long postcardId, String tagName, String imageUri) {
         this.id = id;
         this.postcardId = postcardId;
         this.tagName = tagName;
@@ -26,17 +26,17 @@ public class PostcardImage {
     //getters and setters
 
 
-    public int getId() {
+    public long getId() {
         return id;
     }
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public int getPostcardId() {
+    public long getPostcardId() {
         return postcardId;
     }
-    public void setPostcardId(int postcardId) {
+    public void setPostcardId(long postcardId) {
         this.postcardId = postcardId;
     }
 

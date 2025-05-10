@@ -62,7 +62,7 @@ public class PostcardViewModel extends AndroidViewModel {
      * @param postcardId The postcard ID
      * @return LiveData list of related images
      */
-    public LiveData<List<PostcardImage>> getImagesForPostcard(int postcardId) {
+    public LiveData<List<PostcardImage>> getImagesForPostcard(long postcardId) {
         return repository.getImagesForPostcard(postcardId);
     }
 
@@ -72,7 +72,7 @@ public class PostcardViewModel extends AndroidViewModel {
      * @param tagName Tag describing the image type
      * @param imageUri The URI of the image
      */
-    public void addPostcardImage(int postcardId, String tagName, String imageUri) {
+    public void addPostcardImage(long postcardId, String tagName, String imageUri) {
         PostcardImage image = new PostcardImage(postcardId, tagName, imageUri);
         repository.addPostcardImage(image);
     }
