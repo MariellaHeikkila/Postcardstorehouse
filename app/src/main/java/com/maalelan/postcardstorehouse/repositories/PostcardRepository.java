@@ -1,6 +1,8 @@
 package com.maalelan.postcardstorehouse.repositories;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Transformations;
@@ -15,8 +17,6 @@ import com.maalelan.postcardstorehouse.utils.PostcardMapper;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Executors;
-import java.util.function.Consumer;
 
 /**
  * Repository class that handles data operations for postcards.
@@ -57,12 +57,33 @@ public class PostcardRepository {
     /**
      * Inserts a new postcard into the database on a background thread.
      * @param postcard The Postcard object to insert
+     * @param Listener 
      */
-    public void addPostcard(Postcard postcard, Consumer<Long> callback) {
-        Executors.newSingleThreadExecutor().execute(() -> {
-            long id = PostcardDao.insertPostcard(PostcardMapper.toEntity(postcard));
-            callback.accept(id);
-        });
+    public void addPostcard(Postcard postcard, final OnPostcardAddedListener listener) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                // first create an instance of PostcardDao
+                PostcardDao postcardDao = postcardDatabase.postcardDao();
+                long id = postcardDao.insertPostcard(PostcardMapper.toEntity(postcard));
+
+                // callback interface
+                if (listener != null) {
+                    final long finalPostcardId = id;
+                    // Post back to main thread
+                    new Handler(Looper.getMainLooper()).post(new Runnable() {
+                        @Override
+                        public void run() {
+                            listener.OnPostcardAdded(finalPostcardId);
+                        }
+                    });
+                }
+            }
+        }).start();
+    }
+
+    public interface OnPostcardAddedListener {
+        void OnPostcardAdded(long id);
     }
 //    public void addPostcard(Postcard postcard) {
 //        PostcardEntity entity = PostcardMapper.toEntity(postcard);
