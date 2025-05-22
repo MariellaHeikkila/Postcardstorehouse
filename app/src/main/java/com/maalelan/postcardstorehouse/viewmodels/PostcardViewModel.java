@@ -42,9 +42,11 @@ public class PostcardViewModel extends AndroidViewModel {
     /**
      * Triggers the repository to add a new postcard to the database.
      * @param postcard The postcard to be added
+     * @param images List of associated postcard images (can be null or empty)
+     * @param listener Callback to notify when insertion is complete
      */
-    public void addPostcard(Postcard postcard) {
-        repository.addPostcard(postcard);
+    public void addPostcard(Postcard postcard, List<PostcardImage> images, PostcardRepository.OnPostcardAddedListener listener) {
+        repository.addPostcard(postcard, images, listener);
     }
 
     /**

@@ -13,7 +13,7 @@ import java.util.List;
 @Dao
 public interface PostcardDao {
     @Insert
-    long insertPostcard(PostcardEntity... postcards); //same as: public abstract void insertPostcard(PostcardEntity... postcards);
+    long insertPostcard(PostcardEntity postcard); //same as: public abstract void insertPostcard(PostcardEntity... postcards);
 
     @Update
     void updatePostcard(PostcardEntity postcardEntity);

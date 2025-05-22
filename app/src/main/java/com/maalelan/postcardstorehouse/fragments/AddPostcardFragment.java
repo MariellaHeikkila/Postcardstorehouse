@@ -29,14 +29,17 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.maalelan.postcardstorehouse.R;
 import com.maalelan.postcardstorehouse.models.Postcard;
+import com.maalelan.postcardstorehouse.models.PostcardImage;
 import com.maalelan.postcardstorehouse.utils.DateUtils;
 import com.maalelan.postcardstorehouse.viewmodels.PostcardViewModel;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -57,7 +60,6 @@ public class AddPostcardFragment extends Fragment {
     private static final int REQUEST_STORAGE_PERMISSION =3;
       private ImageView imagePreview;
     private Bitmap capturedImage;
-    private boolean isPhotoTaken = false;
 
     @Nullable
     @Override
@@ -232,19 +234,39 @@ public class AddPostcardFragment extends Fragment {
                 isSentByUser
         );
 
-        // Save postcard and get the generated ID
-        long postcardId = viewModel.addPostcard(postcard);
+        // prepare imageList
+        List<PostcardImage> imageList = null;
 
         if (capturedImage != null) {
-            String imagePath = saveImageToGallery(capturedImage);
-
+            String imageUri = saveImageToGallery(capturedImage);
+            if (imageUri != null) {
+                // Postcard ID is not yet given, so 0 or 1 here and it will be replaced in repository
+                PostcardImage image = new PostcardImage(0, "photo", imageUri);
+                imageList = new ArrayList<>();
+                imageList.add(image);
+            }
         }
 
-
-
-        Toast.makeText(requireContext(), "Postcard saved", Toast.LENGTH_SHORT).show();
-
-        // After this maybe resetting form, navigate somewhere?
+        // resetting form, navigate somewhere?
+        viewModel.addPostcard(postcard, imageList, id -> {
+            requireActivity().runOnUiThread(() -> {
+                Toast.makeText(requireContext(), "Postikortti tallennettu", Toast.LENGTH_SHORT).show();
+                resetForm();
+            });
+        });
 
     }
+
+    private void resetForm() {
+        editSentDate.setText("");
+        editReceivedDate.setText("");
+        editCountry.setText("");
+        editTopic.setText("");
+        editNotes.setText("");
+        checkboxFavorite.setChecked(false);
+        checkboxIsSentByUser.setChecked(false);
+        imagePreview.setImageDrawable(null);
+        capturedImage = null;
+    }
+
 }
