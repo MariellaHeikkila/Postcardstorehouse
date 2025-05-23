@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -149,14 +150,20 @@ public class AddPostcardFragment extends Fragment {
     }
 
     private String saveImageToGallery(Bitmap imageBitmap) {
-        File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+        File baseDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+        File storageDir = new File(baseDir, "PostcardStorehouse");
 
         // create directory if there is not
         if (!storageDir.exists()) {
-            storageDir.mkdirs();
+            boolean created = storageDir.mkdirs();
+            if (!created) {
+                Log.e("SaveImage", "Kansion luonti epäonnistui: " + storageDir.getAbsolutePath());
+                Toast.makeText(getContext(), "Kansiota ei voitu luoda", Toast.LENGTH_SHORT).show();
+                return null;
+            }
         }
 
-        String timeStamp = DateUtils.format(new Date());
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss_SSS", Locale.getDefault()).format(new Date());
         String fileName = "IMG" + timeStamp + ".jpg";
 
         File imageFile = new File(storageDir, fileName);
