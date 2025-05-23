@@ -32,6 +32,7 @@ import com.maalelan.postcardstorehouse.R;
 import com.maalelan.postcardstorehouse.models.Postcard;
 import com.maalelan.postcardstorehouse.models.PostcardImage;
 import com.maalelan.postcardstorehouse.utils.DateUtils;
+import com.maalelan.postcardstorehouse.utils.ImageUtils;
 import com.maalelan.postcardstorehouse.viewmodels.PostcardViewModel;
 
 import java.io.File;
@@ -149,46 +150,6 @@ public class AddPostcardFragment extends Fragment {
         }
     }
 
-    private String saveImageToGallery(Bitmap imageBitmap) {
-        File baseDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-        File storageDir = new File(baseDir, "PostcardStorehouse");
-
-        // create directory if there is not
-        if (!storageDir.exists()) {
-            boolean created = storageDir.mkdirs();
-            if (!created) {
-                Log.e("SaveImage", "Kansion luonti epäonnistui: " + storageDir.getAbsolutePath());
-                Toast.makeText(getContext(), "Kansiota ei voitu luoda", Toast.LENGTH_SHORT).show();
-                return null;
-            }
-        }
-
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss_SSS", Locale.getDefault()).format(new Date());
-        String fileName = "IMG" + timeStamp + ".jpg";
-
-        File imageFile = new File(storageDir, fileName);
-
-        try (FileOutputStream outputStream = new FileOutputStream(imageFile)) {
-
-            imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
-            outputStream.flush();
-            outputStream.close();
-
-            // update gallery
-            Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-            mediaScanIntent.setData(Uri.fromFile(imageFile));
-            requireContext().sendBroadcast(mediaScanIntent);
-
-            Toast.makeText(getContext(), "Kuvatallennus galleriaan onnistui", Toast.LENGTH_SHORT).show();
-
-            return imageFile.getAbsolutePath();
-        } catch (Exception e) {
-            e.printStackTrace();
-            Toast.makeText(getContext(), "Kuvatallennus galleriaan epäonnistui", Toast.LENGTH_SHORT).show();
-            return null;
-        }
-    }
-
     /**
      * Shows a date picker dialog and sets the selected date to the given EditText.
      * @param targetField The EditText to update with the selected date
@@ -245,7 +206,7 @@ public class AddPostcardFragment extends Fragment {
         List<PostcardImage> imageList = null;
 
         if (capturedImage != null) {
-            String imageUri = saveImageToGallery(capturedImage);
+            String imageUri = ImageUtils.saveImageToGallery(requireContext(), capturedImage);
             if (imageUri != null) {
                 // Postcard ID is not yet given, so 0 or 1 here and it will be replaced in repository
                 PostcardImage image = new PostcardImage(0, "photo", imageUri);
