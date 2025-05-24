@@ -3,16 +3,20 @@ package com.maalelan.postcardstorehouse.adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.maalelan.postcardstorehouse.R;
 import com.maalelan.postcardstorehouse.models.Postcard;
 import com.maalelan.postcardstorehouse.utils.DateUtils;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * RecyclerView Adapter for displaying a list of Postcard objects.
@@ -21,6 +25,7 @@ import java.util.List;
 public class PostcardAdapter extends RecyclerView.Adapter<PostcardAdapter.PostcardViewHolder> {
 
     private List<Postcard> postcards;
+    private Map<Long, String> postcardThumbnails = new HashMap<>();
 
     /**
      * Sets the list of postcards to be displayed and refreshes the RecyclerView.
@@ -32,9 +37,17 @@ public class PostcardAdapter extends RecyclerView.Adapter<PostcardAdapter.Postca
     }
 
     /**
+     *
+     */
+    public void setPostcardThumbnails(Map<Long, String> thumbnails) {
+        this.postcardThumbnails = thumbnails;
+        notifyDataSetChanged();
+    }
+
+    /**
      * Creates a new ViewHolder when there are no existing view holders that can be reused.
      * @param parent The parent ViewGroup into which the new view will be added
-     * @param viewType The viev type of the new View
+     * @param viewType The view type of the new View
      * @return A new postcardViewHolder instance
      */
     @NonNull
@@ -61,7 +74,16 @@ public class PostcardAdapter extends RecyclerView.Adapter<PostcardAdapter.Postca
         // Convert the sent date to a string format before displaying
         holder.textViewDate.setText(DateUtils.format(postcard.getSentDate()));
 
-        // Later image loading logic here
+        // Load thumbnail if available
+        String uri = postcardThumbnails.get(postcard.getId());
+        if (uri != null) {
+            Glide.with(holder.itemView.getContext())
+                    .load(uri)
+                    .placeholder(R.drawable.ic_camera_placeholder)
+                    .into(holder.imageViewThumbnail);
+        } else {
+            holder.imageViewThumbnail.setImageResource(R.drawable.ic_camera_placeholder);
+        }
     }
 
     /**
@@ -78,6 +100,7 @@ public class PostcardAdapter extends RecyclerView.Adapter<PostcardAdapter.Postca
      */
     public static class PostcardViewHolder extends RecyclerView.ViewHolder {
         TextView textViewCountry, textViewTopic, textViewDate;
+        ImageView imageViewThumbnail;
 
         /**
          * Constructor that binds views from the layout.
@@ -88,6 +111,7 @@ public class PostcardAdapter extends RecyclerView.Adapter<PostcardAdapter.Postca
             textViewCountry = itemView.findViewById(R.id.text_country);
             textViewTopic = itemView.findViewById(R.id.text_topic);
             textViewDate = itemView.findViewById(R.id.text_sent_date);
+            imageViewThumbnail = itemView.findViewById(R.id.image_thumbnail);
         }
     }
 }

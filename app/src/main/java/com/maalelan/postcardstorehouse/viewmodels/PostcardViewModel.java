@@ -11,6 +11,7 @@ import com.maalelan.postcardstorehouse.models.PostcardImage;
 import com.maalelan.postcardstorehouse.repositories.PostcardRepository;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * ViewModel for managing postcard relaet UI data in a lifecycle-conscious way.
@@ -21,6 +22,8 @@ public class PostcardViewModel extends AndroidViewModel {
     private final PostcardRepository repository;
     private final LiveData<List<Postcard>> allPostcards;
 
+    private final LiveData<Map<Long, String>> postcardThumbnails;
+
     /**
      * Constructor initializes the repository and Livedata source.
      * @param application The Application instance used to create the ViewModel
@@ -29,6 +32,7 @@ public class PostcardViewModel extends AndroidViewModel {
         super(application);
         repository = new PostcardRepository(application);
         allPostcards = repository.getAllPostcards();
+        postcardThumbnails = repository.getPostcardThumbnails();
     }
 
     /**
@@ -66,6 +70,13 @@ public class PostcardViewModel extends AndroidViewModel {
      */
     public LiveData<List<PostcardImage>> getImagesForPostcard(long postcardId) {
         return repository.getImagesForPostcard(postcardId);
+    }
+
+    /**
+     *
+     */
+    public LiveData<Map<Long, String>> getPostcardThumbnails() {
+        return postcardThumbnails;
     }
 
     /**

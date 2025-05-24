@@ -16,7 +16,9 @@ import com.maalelan.postcardstorehouse.models.database.entities.PostcardImageEnt
 import com.maalelan.postcardstorehouse.utils.PostcardMapper;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Repository class that handles data operations related to postcards and their images.
@@ -121,6 +123,25 @@ public class PostcardRepository {
                         images.add(PostcardMapper.fromEntity(entity));
                     }
                     return images;
+                }
+        );
+    }
+
+    /**
+     * Get thumbnail image for recycler view
+     */
+    public LiveData<Map<Long, String>> getPostcardThumbnails() {
+        return Transformations.map(
+                postcardDatabase.postcardImageDao().getAllImages(),
+                entities -> {
+                    Map<Long, String> thumbnailMap = new HashMap<>();
+                    for (PostcardImageEntity image : entities) {
+                        // only store the first image per postcard
+                        if (!thumbnailMap.containsKey(image.getPostcardId())) {
+                            thumbnailMap.put(image.getPostcardId(), image.getImageUri());
+                        }
+                    }
+                    return thumbnailMap;
                 }
         );
     }

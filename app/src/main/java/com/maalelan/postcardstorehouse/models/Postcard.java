@@ -56,8 +56,8 @@ public class Postcard {
     public String getTopic() {
         return topic;
     }
-    public void setTopic(String theme) {
-        this.topic = topic;
+    public void setTopic(String topic) {
+        this.topic = this.topic;
     }
 
     public Date getSentDate() {

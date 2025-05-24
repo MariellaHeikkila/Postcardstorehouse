@@ -66,8 +66,13 @@ public class GalleryFragment extends Fragment {
                     recyclerView.setVisibility(View.VISIBLE);
                 }
             });
+
+            postcardViewModel.getPostcardThumbnails().observe(getViewLifecycleOwner(), thumbnails -> {
+                adapter.setPostcardThumbnails(thumbnails);
+            });
         } catch (Exception e) {
             Toast.makeText(getContext(), "An error occurred: " + e.getMessage(), Toast.LENGTH_LONG).show();
         }
+
     }
 }

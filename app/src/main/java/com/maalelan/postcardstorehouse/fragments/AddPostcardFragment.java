@@ -233,7 +233,7 @@ public class AddPostcardFragment extends Fragment {
         editNotes.setText("");
         checkboxFavorite.setChecked(false);
         checkboxIsSentByUser.setChecked(false);
-        imagePreview.setImageDrawable(null);
+        imagePreview.setImageDrawable(ContextCompat.getDrawable(requireContext(),R.drawable.ic_camera_placeholder));
         capturedImage = null;
     }
 

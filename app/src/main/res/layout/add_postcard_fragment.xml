@@ -5,6 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
+    android:fillViewport="true"
+    android:fitsSystemWindows="true"
     android:background="#CCFFFFFF"> <!-- 80% transparent -->
 
     <LinearLayout
@@ -12,13 +14,14 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center_horizontal">
+        <!--android:gravity="center_horizontal"-->
 
         <!-- Photo Preview with Placeholder -->
         <ImageView
             android:id="@+id/image_preview"
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:layout_gravity="center"
+
             android:src="@drawable/ic_camera_placeholder"
             android:scaleType="centerCrop"
             android:contentDescription="Photo preview"/>
@@ -36,12 +39,11 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginTop="8dp"
-        android:gravity="center_horizontal"
         android:weightSum="2">
         <!-- Sent Date -->
         <EditText
             android:id="@+id/edit_sent_date"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:hint="Sent date"
@@ -53,7 +55,7 @@
         <!-- Received Date -->
         <EditText
             android:id="@+id/edit_received_date"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:hint="Received date"
@@ -70,15 +72,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Country of origin"
-            android:inputType="textCapWords"/>
+            android:inputType="textCapWords"
+            android:layout_marginTop="8dp"/>
 
         <!-- Theme / Topic as EditText -->
         <EditText
             android:id="@+id/edit_topic"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Theme / Topic"
-            android:inputType="text"/>
+            android:hint="Topic"
+            android:inputType="text"
+            android:layout_marginTop="8dp"/>
 
         <!-- if dropdown, could be something like:
         <Spinner
@@ -94,19 +98,19 @@
             android:layout_height="wrap_content"
             android:hint="Notes"
             android:inputType="textMultiLine"
-            android:minLines="3"/>
+            android:minLines="3"
+            android:layout_marginTop="8dp"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginTop="8dp"
-            android:gravity="center_horizontal"
             android:weightSum="2">
         <!-- Favorite Checkbox -->
         <CheckBox
             android:id="@+id/checkbox_favorite"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Mark as favorite"
@@ -115,7 +119,7 @@
         <!-- isSentByUser -->
         <CheckBox
             android:id="@+id/checkbox_is_sent_by_user"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Sent by me"/>
