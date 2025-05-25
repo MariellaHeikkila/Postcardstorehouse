@@ -1,8 +1,10 @@
 package com.maalelan.postcardstorehouse.adapters;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -67,12 +69,15 @@ public class PostcardAdapter extends RecyclerView.Adapter<PostcardAdapter.Postca
     public void onBindViewHolder(@NonNull PostcardViewHolder holder, int position) {
         Postcard postcard = postcards.get(position);
 
+        Log.d("Adapter", "Topic for id " + postcard.getId() + ": " + postcard.getTopic());
+
         // Set data from the Postcard object to the corresponding views
         holder.textViewCountry.setText(postcard.getCountry());
         holder.textViewTopic.setText(postcard.getTopic());
 
         // Convert the sent date to a string format before displaying
         holder.textViewDate.setText(DateUtils.format(postcard.getSentDate()));
+        holder.checkBoxFavorite.setChecked(postcard.isFavorite());
 
         // Load thumbnail if available
         String uri = postcardThumbnails.get(postcard.getId());
@@ -102,6 +107,8 @@ public class PostcardAdapter extends RecyclerView.Adapter<PostcardAdapter.Postca
         TextView textViewCountry, textViewTopic, textViewDate;
         ImageView imageViewThumbnail;
 
+        CheckBox checkBoxFavorite;
+
         /**
          * Constructor that binds views from the layout.
          * @param itemView The root view of the item layout
@@ -112,6 +119,7 @@ public class PostcardAdapter extends RecyclerView.Adapter<PostcardAdapter.Postca
             textViewTopic = itemView.findViewById(R.id.text_topic);
             textViewDate = itemView.findViewById(R.id.text_sent_date);
             imageViewThumbnail = itemView.findViewById(R.id.image_thumbnail);
+            checkBoxFavorite = itemView.findViewById(R.id.checkbox_favorite);
         }
     }
 }

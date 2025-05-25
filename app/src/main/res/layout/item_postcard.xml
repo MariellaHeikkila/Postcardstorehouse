@@ -6,14 +6,14 @@
     android:padding="12dp"
     android:layout_marginBottom="8dp"
     android:elevation="2dp"
-    android:background="#CCFFFFFF"> <!-- 80% transparent -->>
+    android:background="#CCFFFFFF"> <!-- 80% transparent -->
 
     <!-- Thumbnail img -->
     <ImageView
         android:id="@+id/image_thumbnail"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:layout_marginEnd="12dp"
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        android:layout_weight="4"
         android:scaleType="centerCrop"
         android:contentDescription="Postcard thumbnail"
         android:src="@drawable/ic_camera_placeholder"/>
@@ -21,8 +21,26 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical">
+        android:layout_weight="6"
+        android:orientation="vertical"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="end">
+
+        <!-- Favorite star -->
+        <CheckBox
+            android:id="@+id/checkbox_favorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@drawable/star_checkbox_selector"
+            android:contentDescription="Favorite"/>
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/text_country"
@@ -48,12 +66,32 @@
             android:text="Sent Date"
             android:textSize="16dp" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp"
+            android:gravity="center_vertical"
+            android:weightSum="2">
+
+        <Button
+            android:id="@+id/button_delete"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Delete" />
+
+        <Button
+            android:id="@+id/button_to_details"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Details" />
+
+        </LinearLayout>
+
     </LinearLayout>
 
-    <Button
-        android:id="@+id/button_to_details"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Details" />
+
 
 </LinearLayout>

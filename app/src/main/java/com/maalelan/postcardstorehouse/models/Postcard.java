@@ -57,7 +57,7 @@ public class Postcard {
         return topic;
     }
     public void setTopic(String topic) {
-        this.topic = this.topic;
+        this.topic = topic;
     }
 
     public Date getSentDate() {
