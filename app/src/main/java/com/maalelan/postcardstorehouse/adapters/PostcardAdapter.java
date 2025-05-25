@@ -29,6 +29,16 @@ public class PostcardAdapter extends RecyclerView.Adapter<PostcardAdapter.Postca
     private List<Postcard> postcards;
     private Map<Long, String> postcardThumbnails = new HashMap<>();
 
+    private OnPostcardFavoriteToggleListener postcardClickListener;
+
+    public interface OnPostcardFavoriteToggleListener {
+        void onFavoriteToggle(Postcard postcard, boolean isFavorite);
+    }
+
+    public void setPostcardFavoriteToggleListener(OnPostcardFavoriteToggleListener listener) {
+        this.postcardClickListener = listener;
+    }
+
     /**
      * Sets the list of postcards to be displayed and refreshes the RecyclerView.
      * @param postcards List of postcard objects to display
@@ -78,6 +88,11 @@ public class PostcardAdapter extends RecyclerView.Adapter<PostcardAdapter.Postca
         // Convert the sent date to a string format before displaying
         holder.textViewDate.setText(DateUtils.format(postcard.getSentDate()));
         holder.checkBoxFavorite.setChecked(postcard.isFavorite());
+
+        holder.checkBoxFavorite.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            postcard.setFavorite(isChecked);
+            postcardClickListener.onFavoriteToggle(postcard, isChecked);
+        });
 
         // Load thumbnail if available
         String uri = postcardThumbnails.get(postcard.getId());

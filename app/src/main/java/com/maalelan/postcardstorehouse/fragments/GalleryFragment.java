@@ -48,6 +48,15 @@ public class GalleryFragment extends Fragment {
         adapter = new PostcardAdapter();
         recyclerView.setAdapter(adapter);
 
+        // Isfavorite listener
+        adapter.setPostcardFavoriteToggleListener(((postcard, isFavorite) -> {
+            postcard.setFavorite(isFavorite);
+            postcardViewModel.updateFavoriteStatus(postcard, isFavorite);
+            Toast.makeText(getContext(),
+                    "Postikortti " + (isFavorite ? "on lemppari" : "ei oo lemppari"),
+                    Toast.LENGTH_SHORT).show();
+        }));
+
         // Initialize ViewModel to observe the data
         postcardViewModel = new ViewModelProvider(this).get(PostcardViewModel.class);
 

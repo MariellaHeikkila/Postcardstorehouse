@@ -61,6 +61,17 @@ public class PostcardViewModel extends AndroidViewModel {
         repository.updatePostcard(postcard);
     }
 
+    /**
+     * Update isFavorite
+     *
+     * @param postcard
+     * @param isFavorite
+     */
+    public void updateFavoriteStatus(Postcard postcard, boolean isFavorite) {
+        postcard.setFavorite(isFavorite);
+        repository.updatePostcard(postcard);
+    }
+
     // == IMAGE related methods
 
     /**
