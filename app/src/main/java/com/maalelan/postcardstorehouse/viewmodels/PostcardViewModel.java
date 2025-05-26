@@ -72,6 +72,15 @@ public class PostcardViewModel extends AndroidViewModel {
         repository.updatePostcard(postcard);
     }
 
+    /**
+     * Deletes a postcard an all its related images from the database.
+     *
+     * @param postcard The postcard to delete
+     */
+    public void deletePostcardCompletely(Postcard postcard) {
+        repository.deletePostcardWithImages(postcard);
+    }
+
     // == IMAGE related methods
 
     /**

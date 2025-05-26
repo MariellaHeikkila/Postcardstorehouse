@@ -1,5 +1,6 @@
 package com.maalelan.postcardstorehouse.fragments;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -56,6 +57,19 @@ public class GalleryFragment extends Fragment {
                     "Postikortti " + (isFavorite ? "on lemppari" : "ei oo lemppari"),
                     Toast.LENGTH_SHORT).show();
         }));
+
+        adapter.setOnPostcardDeleteListener(postcard -> {
+            new AlertDialog.Builder(getContext())
+                    .setTitle("Vahvista poisto")
+                    .setMessage("Haluatko varmasti poistaa postikortin \"" + postcard.getTopic() + "\"?")
+                    .setPositiveButton("Poista", (dialog, which) -> {
+                        postcardViewModel.deletePostcardCompletely(postcard);
+                        adapter.removePostcard(postcard);
+                        Toast.makeText(getContext(), "Postikortti poistettu", Toast.LENGTH_SHORT).show();
+                    })
+                    .setNegativeButton("Peruuta", null)
+                    .show();
+        });
 
         // Initialize ViewModel to observe the data
         postcardViewModel = new ViewModelProvider(this).get(PostcardViewModel.class);

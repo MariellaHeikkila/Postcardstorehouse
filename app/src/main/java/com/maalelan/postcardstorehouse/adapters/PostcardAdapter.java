@@ -4,6 +4,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -31,16 +32,43 @@ public class PostcardAdapter extends RecyclerView.Adapter<PostcardAdapter.Postca
 
     private OnPostcardFavoriteToggleListener postcardClickListener;
 
+    private OnPostcardDeleteListener deleteListener;
+
+    /**
+     * Interface for listening to favorite checkbox toggle events.
+     */
     public interface OnPostcardFavoriteToggleListener {
         void onFavoriteToggle(Postcard postcard, boolean isFavorite);
     }
 
+    /**
+     * Register a listener for favorite toggle events.
+     *
+     * @param listener The listener to notify when postcard´s favorite checkbox toggle events.
+     */
     public void setPostcardFavoriteToggleListener(OnPostcardFavoriteToggleListener listener) {
         this.postcardClickListener = listener;
     }
 
     /**
+     * Interface for listening to postcard delete events.
+     */
+    public interface OnPostcardDeleteListener {
+        void onDelete(Postcard postcard);
+    }
+
+    /**
+     * Registers a listener for postcard delete events.
+     *
+     * @param listener The listener to notify when a postcard is deleted
+     */
+    public void setOnPostcardDeleteListener(OnPostcardDeleteListener listener) {
+        this.deleteListener = listener;
+    }
+
+    /**
      * Sets the list of postcards to be displayed and refreshes the RecyclerView.
+     *
      * @param postcards List of postcard objects to display
      */
     public void setPostcards(List<Postcard> postcards) {
@@ -49,11 +77,26 @@ public class PostcardAdapter extends RecyclerView.Adapter<PostcardAdapter.Postca
     }
 
     /**
+     * Sets the map of postcard thumbnail URIs and refreshes the view.
      *
+     * @param thumbnails Map of postcard IDs and corresponding thumbnail image URIs
      */
     public void setPostcardThumbnails(Map<Long, String> thumbnails) {
         this.postcardThumbnails = thumbnails;
         notifyDataSetChanged();
+    }
+
+    /**
+     * Removes a single postcard from the adapter and notifies RecyclerView.
+     *
+     * @param postcard The postcard to remove
+     */
+    public void removePostcard(Postcard postcard) {
+        int position = postcards.indexOf(postcard);
+        if (position != -1) {
+            postcards.remove(position);
+            notifyItemRemoved(position);
+        }
     }
 
     /**
@@ -79,8 +122,6 @@ public class PostcardAdapter extends RecyclerView.Adapter<PostcardAdapter.Postca
     public void onBindViewHolder(@NonNull PostcardViewHolder holder, int position) {
         Postcard postcard = postcards.get(position);
 
-        Log.d("Adapter", "Topic for id " + postcard.getId() + ": " + postcard.getTopic());
-
         // Set data from the Postcard object to the corresponding views
         holder.textViewCountry.setText(postcard.getCountry());
         holder.textViewTopic.setText(postcard.getTopic());
@@ -92,6 +133,12 @@ public class PostcardAdapter extends RecyclerView.Adapter<PostcardAdapter.Postca
         holder.checkBoxFavorite.setOnCheckedChangeListener((buttonView, isChecked) -> {
             postcard.setFavorite(isChecked);
             postcardClickListener.onFavoriteToggle(postcard, isChecked);
+        });
+
+        holder.deletePostcard.setOnClickListener(v -> {
+            if (deleteListener != null) {
+                deleteListener.onDelete(postcard);
+            }
         });
 
         // Load thumbnail if available
@@ -124,6 +171,8 @@ public class PostcardAdapter extends RecyclerView.Adapter<PostcardAdapter.Postca
 
         CheckBox checkBoxFavorite;
 
+        Button deletePostcard;
+
         /**
          * Constructor that binds views from the layout.
          * @param itemView The root view of the item layout
@@ -135,6 +184,7 @@ public class PostcardAdapter extends RecyclerView.Adapter<PostcardAdapter.Postca
             textViewDate = itemView.findViewById(R.id.text_sent_date);
             imageViewThumbnail = itemView.findViewById(R.id.image_thumbnail);
             checkBoxFavorite = itemView.findViewById(R.id.checkbox_favorite);
+            deletePostcard = itemView.findViewById(R.id.button_delete);
         }
     }
 }

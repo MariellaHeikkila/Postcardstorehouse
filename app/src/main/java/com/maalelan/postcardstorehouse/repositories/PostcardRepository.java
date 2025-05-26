@@ -158,6 +158,21 @@ public class PostcardRepository {
     }
 
     /**
+     * Deletes a postcard and all its related images from the database.
+     *
+     * @param postcard The postcard to delete
+     */
+    public void deletePostcardWithImages(Postcard postcard) {
+        new Thread(() -> {
+            long postcardId = postcard.getId();
+            // delete images
+            postcardDatabase.postcardImageDao().deleteImagesByPostcardId(postcardId);
+            // delete postcard
+            postcardDatabase.postcardDao().deletePostcardById(postcardId);
+        }).start();
+    }
+
+    /**
      * Deletes an image from the database on a background thread.
      *
      * @param image The PostcardImage object to delete

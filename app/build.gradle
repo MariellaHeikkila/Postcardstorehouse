@@ -49,6 +49,7 @@ dependencies {
 
     // Images
     implementation libs.glide
+    annotationProcessor libs.glide.compiler
 
     testImplementation libs.junit
     androidTestImplementation libs.ext.junit

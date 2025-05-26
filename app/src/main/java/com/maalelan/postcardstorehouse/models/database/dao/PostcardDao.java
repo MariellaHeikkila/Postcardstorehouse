@@ -18,6 +18,9 @@ public interface PostcardDao {
     @Update
     void updatePostcard(PostcardEntity postcardEntity);
 
+    @Query("DELETE FROM postcards WHERE id = :postcardId")
+    void deletePostcardById(long postcardId);
+
     @Query("SELECT * FROM postcards")
     LiveData<List<PostcardEntity>> getAllPostcards();
 }
