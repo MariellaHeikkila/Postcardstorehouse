@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="12dp"
+
     android:layout_marginBottom="8dp"
     android:elevation="2dp"
     android:background="#CCFFFFFF"> <!-- 80% transparent -->
@@ -12,7 +12,7 @@
     <ImageView
         android:id="@+id/image_thumbnail"
         android:layout_width="0dp"
-        android:layout_height="200dp"
+        android:layout_height="150dp"
         android:layout_weight="4"
         android:scaleType="centerCrop"
         android:contentDescription="Postcard thumbnail"
@@ -76,6 +76,7 @@
 
         <Button
             android:id="@+id/button_delete"
+            style="@style/Widget.Retro.DeleteButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -83,6 +84,7 @@
 
         <Button
             android:id="@+id/button_to_details"
+            style="@style/Widget.Retro.PrimaryButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"

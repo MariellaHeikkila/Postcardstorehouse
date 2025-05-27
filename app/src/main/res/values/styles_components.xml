@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Retro Primary Button -->
+    <style name="Widget.Retro.PrimaryButton" parent="Widget.MaterialComponents.Button">
+        <item name="backgroundTint">@color/navy_blue</item>
+        <item name="android:textColor">@color/off_white</item>
+        <item name="android:fontFamily">@font/spacegrotesksemibold</item>
+    </style>
+
+    <!-- Retro Secondary (Outlined) Button -->
+    <style name="Widget.Retro.SecondaryButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="strokeColor">@color/navy_blue</item>
+        <item name="android:textColor">@color/navy_blue</item>
+        <item name="android:fontFamily">@font/spacegrotesklight</item>
+    </style>
+
+    <style name="Widget.Retro.DeleteButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="strokeColor">@color/wine_red</item>
+        <item name="android:textColor">@color/wine_red</item>
+        <item name="android:fontFamily">@font/spacegrotesksemibold</item>
+    </style>
+
+    <style name="Widget.Postcardstorehouse.BottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="itemIconTint">@color/saffron_yellow</item>
+        <item name="itemTextColor">@color/saffron_yellow</item>
+        <item name="android:background">@color/wine_red</item>
+    </style>
+</resources>

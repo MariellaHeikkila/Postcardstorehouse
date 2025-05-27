@@ -1,8 +1,18 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.Postcardstorehouse" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    <style name="Base.Theme.Postcardstorehouse" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/wine_red</item>
+        <item name="colorPrimaryContainer">@color/navy_blue</item>
+        <item name="colorOnPrimary">@color/off_white</item>
+        <item name="android:windowBackground">@color/wine_red</item>
+        <item name="android:textColor">@color/off_white</item>
+        <item name="android:fontFamily">@font/spacegroteskmedium</item>
+        <item name="android:statusBarColor">@color/wine_red</item>
+
+        <!-- Component styles -->
+        <item name="buttonStyle">@style/Widget.Retro.PrimaryButton</item>
+        <item name="materialButtonOutlinedStyle">@style/Widget.Retro.SecondaryButton</item>
+        <item name="bottomNavigationStyle">@style/Widget.Postcardstorehouse.BottomNavigationView</item>
     </style>
 
     <style name="Theme.Postcardstorehouse" parent="Base.Theme.Postcardstorehouse" />
