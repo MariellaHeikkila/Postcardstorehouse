@@ -13,6 +13,8 @@
         <item name="buttonStyle">@style/Widget.Retro.PrimaryButton</item>
         <item name="materialButtonOutlinedStyle">@style/Widget.Retro.SecondaryButton</item>
         <item name="bottomNavigationStyle">@style/Widget.Postcardstorehouse.BottomNavigationView</item>
+        <item name="spinnerStyle">@style/Widget.Retro.Spinner</item>
+        <item name="editTextStyle">@style/Widget.Retro.EditText</item>
     </style>
 
     <style name="Theme.Postcardstorehouse" parent="Base.Theme.Postcardstorehouse" />

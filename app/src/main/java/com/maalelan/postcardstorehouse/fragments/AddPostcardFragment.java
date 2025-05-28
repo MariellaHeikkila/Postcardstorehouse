@@ -15,10 +15,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -60,8 +62,10 @@ public class AddPostcardFragment extends Fragment {
     private static final int REQUEST_IMAGE_CAPTURE = 1;
     private static final int REQUEST_CAMERA_PERMISSION = 2;
     private static final int REQUEST_STORAGE_PERMISSION =3;
-      private ImageView imagePreview;
+    private ImageView imagePreview;
     private Bitmap capturedImage;
+
+    private Spinner spinnerTag;
 
     @Nullable
     @Override
@@ -91,12 +95,21 @@ public class AddPostcardFragment extends Fragment {
         buttonSave = view.findViewById(R.id.button_save);
         buttonAddPhoto = view.findViewById(R.id.button_add_photo);
         imagePreview = view.findViewById(R.id.image_preview);
+        spinnerTag = view.findViewById(R.id.spinner_tag);
 
         buttonAddPhoto.setOnClickListener(v -> askCameraPermission());
 
         editSentDate.setOnClickListener(v -> showDatePicker(editSentDate));
         editReceivedDate.setOnClickListener(v -> showDatePicker(editReceivedDate));
 
+        // Adapter for spinner
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+                requireContext(),
+                R.array.tag_list,
+                android.R.layout.simple_spinner_item
+        );
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerTag.setAdapter(adapter);
         // Handle save button click
         buttonSave.setOnClickListener(v -> savePostcard());
 
@@ -187,6 +200,7 @@ public class AddPostcardFragment extends Fragment {
         String notes = editNotes.getText().toString().trim();
         boolean isFavorite = checkboxFavorite.isChecked();
         boolean isSentByUser = checkboxIsSentByUser.isChecked();
+        String tagName = spinnerTag.getSelectedItem().toString();
 
         // Validation maybe here
 
@@ -209,7 +223,7 @@ public class AddPostcardFragment extends Fragment {
             String imageUri = ImageUtils.saveImageToGallery(requireContext(), capturedImage);
             if (imageUri != null) {
                 // Postcard ID is not yet given, so 0 or 1 here and it will be replaced in repository
-                PostcardImage image = new PostcardImage(0, "photo", imageUri);
+                PostcardImage image = new PostcardImage(0, tagName, imageUri);
                 imageList = new ArrayList<>();
                 imageList.add(image);
             }

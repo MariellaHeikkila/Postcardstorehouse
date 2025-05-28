@@ -123,11 +123,11 @@ public class PostcardAdapter extends RecyclerView.Adapter<PostcardAdapter.Postca
         Postcard postcard = postcards.get(position);
 
         // Set data from the Postcard object to the corresponding views
-        holder.textViewCountry.setText(postcard.getCountry());
-        holder.textViewTopic.setText(postcard.getTopic());
+        holder.textViewCountry.setText("Maa: " + postcard.getCountry());
+        holder.textViewTopic.setText("Aihe: " + postcard.getTopic());
 
         // Convert the sent date to a string format before displaying
-        holder.textViewDate.setText(DateUtils.format(postcard.getSentDate()));
+        holder.textViewDate.setText("Lähetyspäivä: " + DateUtils.format(postcard.getSentDate()));
         holder.checkBoxFavorite.setChecked(postcard.isFavorite());
 
         holder.checkBoxFavorite.setOnCheckedChangeListener((buttonView, isChecked) -> {

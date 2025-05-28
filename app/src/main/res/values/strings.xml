@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Postcardstorehouse</string>
+
+    <string-array name="tag_list">
+        <item>postikortti</item>
+        <item>postimerkki</item>
+        <item>leima</item>
+    </string-array>
 </resources>

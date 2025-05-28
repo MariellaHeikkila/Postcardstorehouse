@@ -19,7 +19,7 @@ public class PostcardMapper {
      * @return a PostcardEntity for Room persistence
      */
     public static PostcardEntity toEntity(Postcard postcard) {
-        return new PostcardEntity(
+        PostcardEntity entity = new PostcardEntity(
                 postcard.getCountry(),
                 postcard.getTopic(),
                 DateUtils.format(postcard.getSentDate()),
@@ -28,6 +28,11 @@ public class PostcardMapper {
                 postcard.isFavorite(),
                 postcard.isSentByUser()
         );
+
+        // For updates
+        entity.setId(postcard.getId());
+
+        return entity;
     }
 
     /**
