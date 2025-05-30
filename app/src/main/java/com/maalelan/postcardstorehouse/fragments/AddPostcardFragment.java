@@ -224,6 +224,7 @@ public class AddPostcardFragment extends Fragment {
             if (imageUri != null) {
                 // Postcard ID is not yet given, so 0 or 1 here and it will be replaced in repository
                 PostcardImage image = new PostcardImage(0, tagName, imageUri);
+                image.setId(0); // for new insert
                 imageList = new ArrayList<>();
                 imageList.add(image);
             }

@@ -30,7 +30,11 @@ public class PostcardMapper {
         );
 
         // For updates
-        entity.setId(postcard.getId());
+        if (postcard.getId() > 0) {
+            entity.setId(postcard.getId());
+        } else {
+            entity.setId(0); // For new inserts, let room auto-generate
+        }
 
         return entity;
     }
@@ -75,7 +79,8 @@ public class PostcardMapper {
      */
     public static PostcardImageEntity toEntity(PostcardImage image) {
         PostcardImageEntity entity = new PostcardImageEntity();
-        entity.setId(image.getId());
+        // Only set Id if updating (ID > 0)
+        entity.setId(image.getId() > 0 ? image.getId() : 0);
         entity.setPostcardId(image.getPostcardId());
         entity.setTagName(image.getTagName());
         entity.setImageUri(image.getImageUri());
