@@ -12,11 +12,25 @@
     <fragment
         android:id="@+id/navigation_gallery"
         android:name="com.maalelan.postcardstorehouse.fragments.GalleryFragment"
-        android:label="Gallery" />
+        android:label="Gallery">
+        <action
+            android:id="@+id/action_navigation_gallery_to_navigation_details"
+            app:destination="@+id/navigation_details"/>
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_add"
         android:name="com.maalelan.postcardstorehouse.fragments.AddPostcardFragment"
         android:label="Add" />
+
+    <fragment
+        android:id="@+id/navigation_details"
+        android:name="com.maalelan.postcardstorehouse.fragments.PostcardDetailsFragment"
+        android:label="details">
+
+        <argument
+            android:name="postcardId"
+            app:argType="long"/>
+    </fragment>
 
 </navigation>

@@ -12,11 +12,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavDirections;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.maalelan.postcardstorehouse.R;
 import com.maalelan.postcardstorehouse.adapters.PostcardAdapter;
+import com.maalelan.postcardstorehouse.navigation.NavigationManager;
 import com.maalelan.postcardstorehouse.viewmodels.PostcardViewModel;
 
 public class GalleryFragment extends Fragment {
@@ -45,6 +47,9 @@ public class GalleryFragment extends Fragment {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        // Initialize ViewModel to observe the data
+        postcardViewModel = new ViewModelProvider(this).get(PostcardViewModel.class);
+
         // Adapter for displaying the postcards
         adapter = new PostcardAdapter();
         recyclerView.setAdapter(adapter);
@@ -71,8 +76,11 @@ public class GalleryFragment extends Fragment {
                     .show();
         });
 
-        // Initialize ViewModel to observe the data
-        postcardViewModel = new ViewModelProvider(this).get(PostcardViewModel.class);
+        adapter.setOnPostcardDetailsClickListener(postcard -> {
+            NavDirections action =
+                    GalleryFragmentDirections.actionNavigationGalleryToNavigationDetails(postcard.getId());
+            NavigationManager.getInstance().navigate(this, action);
+        });
 
         try {
             // Observe postcards list

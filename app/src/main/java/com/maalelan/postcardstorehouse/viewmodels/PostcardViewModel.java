@@ -5,6 +5,7 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Transformations;
 
 import com.maalelan.postcardstorehouse.models.Postcard;
 import com.maalelan.postcardstorehouse.models.PostcardImage;
@@ -14,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * ViewModel for managing postcard relaet UI data in a lifecycle-conscious way.
+ * ViewModel for managing postcard relate UI data in a lifecycle-conscious way.
  * Acts as a bridge between the UI and the repository.
  */
 public class PostcardViewModel extends AndroidViewModel {
@@ -41,6 +42,24 @@ public class PostcardViewModel extends AndroidViewModel {
      */
     public LiveData<List<Postcard>> getAllPostcards() {
         return allPostcards;
+    }
+
+    /**
+     * Returns Livedata object containing the Postcard with the specified ID.
+     *
+     * @param id The unique identifier of the postcard to retrieve
+     * @return Livedata containing the Postcard with the matching ID, or null.
+     */
+    public LiveData<Postcard> getPostcardById(long id) {
+        return Transformations.map(allPostcards, postcards -> {
+            if (postcards == null) return null;
+            for (Postcard postcard : postcards) {
+                if (postcard.getId() == id) {
+                    return postcard;
+                }
+            }
+            return null;
+        });
     }
 
     /**
@@ -97,6 +116,20 @@ public class PostcardViewModel extends AndroidViewModel {
      */
     public LiveData<Map<Long, String>> getPostcardThumbnails() {
         return postcardThumbnails;
+    }
+
+    /**
+     * Returns a Livedata object containing the thumbnail URI of the specified postcard.
+     * The URI is extracted from the map of all loaded thumbnails.
+     *
+     * @param postcardId The iD of the postcard whose thumbnail URi is requested
+     * @return Livedata containing the thumbnail URI as a String, or null if not found
+     */
+    public LiveData<String> getThumbnailByPostcardId(long postcardId) {
+        return Transformations.map(postcardThumbnails, map -> {
+            if (map == null) return null;
+            return map.get(postcardId);
+        });
     }
 
     /**

@@ -44,7 +44,7 @@ public class NavigationManager {
     }
 
     /**
-     * Navigare to a destination by resource ID
+     * Navigate to a destination by resource ID
      * @param fragment The current fragment
      * @param destinationId The destination resource ID
      */

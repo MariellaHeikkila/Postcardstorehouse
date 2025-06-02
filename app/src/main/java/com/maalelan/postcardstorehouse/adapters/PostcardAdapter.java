@@ -33,6 +33,7 @@ public class PostcardAdapter extends RecyclerView.Adapter<PostcardAdapter.Postca
     private OnPostcardFavoriteToggleListener postcardClickListener;
 
     private OnPostcardDeleteListener deleteListener;
+    private OnPostcardDetailsClickListener detailsClickListener;
 
     /**
      * Interface for listening to favorite checkbox toggle events.
@@ -64,6 +65,14 @@ public class PostcardAdapter extends RecyclerView.Adapter<PostcardAdapter.Postca
      */
     public void setOnPostcardDeleteListener(OnPostcardDeleteListener listener) {
         this.deleteListener = listener;
+    }
+
+    public interface OnPostcardDetailsClickListener {
+        void onDetailsClick(Postcard postcard);
+    }
+
+    public void setOnPostcardDetailsClickListener(OnPostcardDetailsClickListener listener) {
+        this.detailsClickListener = listener;
     }
 
     /**
@@ -128,16 +137,25 @@ public class PostcardAdapter extends RecyclerView.Adapter<PostcardAdapter.Postca
 
         // Convert the sent date to a string format before displaying
         holder.textViewDate.setText("Lähetyspäivä: " + DateUtils.format(postcard.getSentDate()));
+        holder.checkBoxFavorite.setOnCheckedChangeListener(null);
         holder.checkBoxFavorite.setChecked(postcard.isFavorite());
 
         holder.checkBoxFavorite.setOnCheckedChangeListener((buttonView, isChecked) -> {
             postcard.setFavorite(isChecked);
-            postcardClickListener.onFavoriteToggle(postcard, isChecked);
+            if (postcardClickListener != null) {
+                postcardClickListener.onFavoriteToggle(postcard, isChecked);
+            }
         });
 
         holder.deletePostcard.setOnClickListener(v -> {
             if (deleteListener != null) {
                 deleteListener.onDelete(postcard);
+            }
+        });
+
+        holder.detailsButton.setOnClickListener(view -> {
+            if (detailsClickListener != null) {
+                detailsClickListener.onDetailsClick(postcard);
             }
         });
 
@@ -171,7 +189,7 @@ public class PostcardAdapter extends RecyclerView.Adapter<PostcardAdapter.Postca
 
         CheckBox checkBoxFavorite;
 
-        Button deletePostcard;
+        Button deletePostcard, detailsButton;
 
         /**
          * Constructor that binds views from the layout.
@@ -185,6 +203,7 @@ public class PostcardAdapter extends RecyclerView.Adapter<PostcardAdapter.Postca
             imageViewThumbnail = itemView.findViewById(R.id.image_thumbnail);
             checkBoxFavorite = itemView.findViewById(R.id.checkbox_favorite);
             deletePostcard = itemView.findViewById(R.id.button_delete);
+            detailsButton = itemView.findViewById(R.id.button_to_details);
         }
     }
 }
