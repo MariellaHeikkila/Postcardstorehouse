@@ -86,6 +86,7 @@ app/
 │   │   │   ├── models/                             # Data models (Model layer)
 │   │   │   │   ├── Postcard.java                   # Data model for business logic
 │   │   │   │   ├── PostcardImage.java              # Data model for business logic
+│   │   │   │   ├── FilterCriteria.java             # Filter model
 │   │   │   │   └── database/                       # Database operations and entities
 │   │   │   │       ├── entities/ 
 │   │   │   │       │   └── PostcardEntity.java     # Room Entity
@@ -100,8 +101,7 @@ app/
 |   │   │       ├── Event.java                      # Navigation
 │   │   │       ├── ImageUtils.java                 # Image processing functions
 │   │   │       ├── InputValidator.java             # checks input formats, return true/false/error msg
-│   │   │       ├── PostcardMapper.java             # POJO <-> Entity
-│   │   │       └── PostcardFilterHelper.java       # Filtering logic
+│   │   │       └──PostcardMapper.java             # POJO <-> Entity
 │   │   └── res/                                    # Resources
 │   │       ├── layout/                             # Fragment/activity layouts
 │   │       ├── menu/                               # Menu resources (e.g., bottom nav items)

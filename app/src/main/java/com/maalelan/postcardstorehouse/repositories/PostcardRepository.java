@@ -7,6 +7,7 @@ import android.os.Looper;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Transformations;
 
+import com.maalelan.postcardstorehouse.models.FilterCriteria;
 import com.maalelan.postcardstorehouse.models.Postcard;
 import com.maalelan.postcardstorehouse.models.PostcardImage;
 import com.maalelan.postcardstorehouse.models.database.PostcardDatabase;
@@ -23,6 +24,8 @@ import java.util.Map;
 /**
  * Repository class that handles data operations related to postcards and their images.
  * Acts as an abstraction layer between the UI and the Room db.
+ *
+ * Enhanced with filtering capabilities for postcard queries.
  */
 public class PostcardRepository {
 
@@ -47,6 +50,33 @@ public class PostcardRepository {
     public LiveData<List<Postcard>> getAllPostcards() {
         return Transformations.map(
                 postcardDatabase.postcardDao().getAllPostcards(),
+                entities -> {
+                    List<Postcard> postcards = new ArrayList<>();
+                    for (PostcardEntity entity : entities) {
+                        postcards.add(PostcardMapper.fromEntity(entity));
+                    }
+                    return postcards;
+                }
+        );
+    }
+
+    /**
+     * Retrieves filtered postcards based on the provided filter criteria.
+     * Supports filtering by country, topic, favorite status, sent by user status and tag names.
+     * All filters are optional - null values are ignored.
+     *
+     * @param filterCriteria The filter criteria containing all filter parameters
+     * @return LiveData containing a list filtered Postcard objects
+     */
+    public LiveData<List<Postcard>> getFilteredPostcards(FilterCriteria filterCriteria) {
+        return Transformations.map(
+                postcardDatabase.postcardDao().getFilteredPostcards(
+                        filterCriteria.getCountry(),
+                        filterCriteria.getTopic(),
+                        filterCriteria.getIsFavorite(),
+                        filterCriteria.getIsSentByUser(),
+                        filterCriteria.getTagName()
+                ),
                 entities -> {
                     List<Postcard> postcards = new ArrayList<>();
                     for (PostcardEntity entity : entities) {

@@ -48,5 +48,25 @@ public interface PostcardDao {
                                                         Boolean isFavorite, Boolean isSentByUser,
                                                         String tagName);
 
+    /**
+     * Get distinct countries for filter dropdown.
+     * Ordered alphabetically for consistent UI experience.
+     *
+     * @return LiveData list of unique country names
+     */
+    @Query("SELECT DISTINCT country FROM postcards " +
+            "WHERE country IS NOT NULL AND country != '' " +
+            "ORDER BY country ASC")
+    LiveData<List<String>> getDistinctCountries();
 
+    /**
+     * Get distinct topics for filter dropdown.
+     * Ordered alphabetically for consistent UI experience.
+     *
+     * @return LiveData list of unique topic names
+     */
+    @Query("SELECT DISTINCT topic FROM postcards " +
+            "WHERE topic IS NOT NULL AND topic != '' " +
+            "ORDER BY topic ASC")
+    LiveData<List<String>> getDistinctTopics();
 }
