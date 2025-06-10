@@ -212,4 +212,36 @@ public class PostcardRepository {
         new Thread(() -> postcardDatabase.postcardImageDao().delete(entity)).start();
     }
 
+    //== FILTER SUPPORT METHODS ==
+
+    /**
+     * Retrieves distinct countries from all postcards for filter options.
+     * Used to populate country filter dropdown
+     *
+     * @return LiveData list of unique country names
+     */
+    public LiveData<List<String>> getDistinctCountries() {
+        return postcardDatabase.postcardDao().getDistinctCountries();
+    }
+
+    /**
+     * Retrieves distinct topics from all postcards for filter options.
+     * used to populate topic filter dropdown.
+     *
+     * @return LiveData list of unique topic names
+     */
+    public LiveData<List<String>> getDistinctTopics() {
+        return postcardDatabase.postcardDao().getDistinctTopics();
+    }
+
+    /**
+     * Retrieves distinct tag names from all postcard images for filter options.
+     * Used to populate tag filter dropdown.
+     *
+     * @return LiveData list of unique tag names
+     */
+    public LiveData<List<String>> getDistinctTagNames() {
+        return postcardDatabase.postcardImageDao().getDistinctTagNames();
+    }
+
 }
