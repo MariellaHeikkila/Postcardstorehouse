@@ -5,8 +5,11 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MediatorLiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 
+import com.maalelan.postcardstorehouse.models.FilterCriteria;
 import com.maalelan.postcardstorehouse.models.Postcard;
 import com.maalelan.postcardstorehouse.models.PostcardImage;
 import com.maalelan.postcardstorehouse.repositories.PostcardRepository;
@@ -22,11 +25,21 @@ public class PostcardViewModel extends AndroidViewModel {
 
     private final PostcardRepository repository;
     private final LiveData<List<Postcard>> allPostcards;
-
     private final LiveData<Map<Long, String>> postcardThumbnails;
+
+    // Filter-related LiveData
+    private final MutableLiveData<FilterCriteria> currentFilterCriteria;
+    private final MediatorLiveData<List<Postcard>> displayedPostcards;
+
+    // Filter options for UI
+    private final LiveData<List<String>> availableCountries;
+    private final LiveData<List<String>> availableTopics;
+    private final LiveData<List<String>> availableTagNames;
 
     /**
      * Constructor initializes the repository and Livedata source.
+     * Sets up filtering mechanism with MediatorLiveData.
+     *
      * @param application The Application instance used to create the ViewModel
      */
     public PostcardViewModel(@NonNull Application application) {
@@ -34,6 +47,80 @@ public class PostcardViewModel extends AndroidViewModel {
         repository = new PostcardRepository(application);
         allPostcards = repository.getAllPostcards();
         postcardThumbnails = repository.getPostcardThumbnails();
+
+        // filter-related LiveData
+        currentFilterCriteria = new MutableLiveData<>(FilterCriteria.empty());
+        displayedPostcards = new MediatorLiveData<>();
+        // Filter options
+        availableCountries = repository.getDistinctCountries();
+        availableTopics = repository.getDistinctTopics();
+        availableTagNames = repository.getDistinctTagNames();
+
+        setupFilterMediatorLiveData();
+
+    }
+
+    /**
+     * Sets up MediatorLiveData to automatically switch between filtered and unfiltered results.
+     * When filter criteria changes, it either shows all postcards or applies filters.
+     */
+    private void setupFilterMediatorLiveData() {
+        // add source for all postcards (default view)
+        displayedPostcards.addSource(allPostcards, postcards -> {
+            FilterCriteria criteria = currentFilterCriteria.getValue();
+            if (criteria == null || !criteria.hasActiveFilters()) {
+                displayedPostcards.setValue(postcards);
+            }
+        });
+
+        // add source for filter criteria changes
+        displayedPostcards.addSource(currentFilterCriteria, criteria -> {
+            if (criteria == null || !criteria.hasActiveFilters()) {
+                // No filters active - show all postcards
+                List<Postcard> allCards = allPostcards.getValue();
+                displayedPostcards.setValue(allCards);
+            } else {
+                // filters active - need to switch to filtered source
+                updateFilteredSource(criteria);
+            }
+        });
+    }
+
+    /**
+     * Updates the filtered data source when filter criteria changes.
+     * Removes old filtered source and adds new one.
+     *
+     * @param criteria The new filter criteria to apply
+     */
+    private void updateFilteredSource(FilterCriteria criteria) {
+        //remove any existing filtered sources to prevent memory leaks
+        displayedPostcards.removeSource(allPostcards);
+
+        // add new filtered source
+        LiveData<List<Postcard>> filteredSource = repository.getFilteredPostcards(criteria);
+        displayedPostcards.addSource(filteredSource, filteredPostcards -> {
+            displayedPostcards.setValue(filteredPostcards);
+        });
+
+        // Re-add all postcards source for when filters are cleared
+        displayedPostcards.addSource(allPostcards, postcards -> {
+            FilterCriteria currentCriteria = currentFilterCriteria.getValue();
+            if (currentCriteria == null || !currentCriteria.hasActiveFilters()) {
+                displayedPostcards.setValue(postcards);
+            }
+        });
+    }
+
+    //== PUBLIC METHODS FOR UI ==
+
+    /**
+     * Returns postcards to be displayed (either all or filtered) as LiveData.
+     * This automatically switches between filtered and unfiltered results based on active filters.
+     *
+     * @return LiveData list of Postcard objects to display
+     */
+    public LiveData<List<Postcard>> getDisplayedPostcards() {
+        return displayedPostcards;
     }
 
     /**
@@ -149,6 +236,50 @@ public class PostcardViewModel extends AndroidViewModel {
      */
     public void deletePostcardImage(PostcardImage image) {
         repository.deleteImage(image);
+    }
+
+    //== FILTER METHODS ==
+
+    // getters for filter options
+    public LiveData<List<String>> getAvailableCountries() {
+        return availableCountries;
+    }
+    public LiveData<List<String>> getAvailableTopics() {
+        return availableTopics;
+    }
+    public LiveData<List<String>> getAvailableTagNames() {
+        return availableTagNames;
+    }
+
+    /**
+     * Applies new filter criteria to the postcard list.
+     * This will trigger the MediatorLiveData to update the displayed postcards.
+     *
+     * @param filterCriteria The new filter criteria to apply
+     */
+    public void applyFilters(FilterCriteria filterCriteria) {
+        currentFilterCriteria.setValue(filterCriteria);
+    }
+
+    /**
+     * Clears all active filters and shows all postcards
+     */
+    public void clearFilters() {
+        currentFilterCriteria.setValue(FilterCriteria.empty());
+    }
+
+    /**
+     * Returns the current filter criteria being applied.
+     *
+     * @return LiveData containing the current FilterCriteria
+     */
+    public LiveData<FilterCriteria> getCurrentFilterCriteria() {
+        return currentFilterCriteria;
+    }
+
+    public boolean hasActiveFilters() {
+        FilterCriteria criteria = currentFilterCriteria.getValue();
+        return criteria != null && criteria.hasActiveFilters();
     }
 
 }
