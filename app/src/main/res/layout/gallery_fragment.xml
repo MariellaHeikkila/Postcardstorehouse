@@ -5,6 +5,81 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     >
+    <!-- Filter toggle button -->
+    <Button
+        android:id="@+id/button_toggle_filter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Näytä suodattimet"
+        android:layout_gravity="end"
+        android:padding="8dp"
+        android:layout_marginBottom="8dp"/>
+
+    <!-- Filter panel -->
+    <LinearLayout
+        android:id="@+id/filter_panel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="8dp"
+        android:background="@color/off_white"
+        android:visibility="gone"
+        android:layout_marginBottom="8dp">
+
+        <Spinner
+            android:id="@+id/spinner_country"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"/>
+
+        <Spinner
+            android:id="@+id/spinner_topic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"/>
+
+        <Spinner
+            android:id="@+id/spinner_tag_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"/>
+
+        <CheckBox
+            android:id="@+id/checkbox_filter_favorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Näytä suosikit"
+            android:layout_marginBottom="4dp"/>
+
+        <CheckBox
+            android:id="@+id/checkbox_filter_sent_by_user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Näytä itse lähetetyt"
+            android:layout_marginBottom="4dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="end">
+
+            <Button
+                android:id="@+id/button_clear_filters"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tyhjennä valinnat"
+                android:layout_marginEnd="8dp"/>
+
+            <Button
+                android:id="@+id/button_apply_filters"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Käytä"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/empty_gallery_text"

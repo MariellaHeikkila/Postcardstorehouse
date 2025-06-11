@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +30,14 @@ public class GalleryFragment extends Fragment {
     private TextView emptyGalleryView;
     private PostcardAdapter adapter;
     private PostcardViewModel postcardViewModel;
+
+    // Filter UI components
+    private View filterPanel;
+    private Button toggleFilterButton, applyFiltersButton, clearFiltersButton;
+    private Spinner spinnerCountry, spinnerTopic, spinnerTagName;
+    private CheckBox checkBoxFavorite, checkBoxSentByUser;
+    private boolean isFilterPanelVisible = false;
+
 
     @Nullable
     @Override
