@@ -52,9 +52,7 @@ public class GalleryFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         // Initialize RecyclerView and ViewModel
-        recyclerView = view.findViewById(R.id.recycler_view);
-        recyclerView.setHasFixedSize(true);
-        emptyGalleryView = view.findViewById(R.id.empty_gallery_text);
+        initializeViews(view);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -116,5 +114,22 @@ public class GalleryFragment extends Fragment {
             Toast.makeText(getContext(), "An error occurred: " + e.getMessage(), Toast.LENGTH_LONG).show();
         }
 
+    }
+
+    private void initializeViews(View view) {
+        recyclerView = view.findViewById(R.id.recycler_view);
+        recyclerView.setHasFixedSize(true);
+        emptyGalleryView = view.findViewById(R.id.empty_gallery_text);
+
+        // Filter UI components
+        filterPanel = view.findViewById(R.id.filter_panel);
+        toggleFilterButton = view.findViewById(R.id.button_toggle_filter);
+        spinnerCountry = view.findViewById(R.id.spinner_country);
+        spinnerTopic = view.findViewById(R.id.spinner_topic);
+        spinnerTagName = view.findViewById(R.id.spinner_tag_name);
+        checkBoxFavorite = view.findViewById(R.id.checkbox_filter_favorite);
+        checkBoxSentByUser = view.findViewById(R.id.checkbox_filter_sent_by_user);
+        applyFiltersButton = view.findViewById(R.id.button_apply_filters);
+        clearFiltersButton = view.findViewById(R.id.button_clear_filters);
     }
 }
