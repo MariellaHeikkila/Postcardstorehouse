@@ -53,43 +53,10 @@ public class GalleryFragment extends Fragment {
 
         // Initialize RecyclerView and ViewModel
         initializeViews(view);
-
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        setupRecyclerView();
 
         // Initialize ViewModel to observe the data
         postcardViewModel = new ViewModelProvider(this).get(PostcardViewModel.class);
-
-        // Adapter for displaying the postcards
-        adapter = new PostcardAdapter();
-        recyclerView.setAdapter(adapter);
-
-        // Isfavorite listener
-        adapter.setPostcardFavoriteToggleListener(((postcard, isFavorite) -> {
-            postcard.setFavorite(isFavorite);
-            postcardViewModel.updateFavoriteStatus(postcard, isFavorite);
-            Toast.makeText(getContext(),
-                    "Postikortti " + (isFavorite ? "on lemppari" : "ei oo lemppari"),
-                    Toast.LENGTH_SHORT).show();
-        }));
-
-        adapter.setOnPostcardDeleteListener(postcard -> {
-            new AlertDialog.Builder(getContext())
-                    .setTitle("Vahvista poisto")
-                    .setMessage("Haluatko varmasti poistaa postikortin \"" + postcard.getTopic() + "\"?")
-                    .setPositiveButton("Poista", (dialog, which) -> {
-                        postcardViewModel.deletePostcardCompletely(postcard);
-                        adapter.removePostcard(postcard);
-                        Toast.makeText(getContext(), "Postikortti poistettu", Toast.LENGTH_SHORT).show();
-                    })
-                    .setNegativeButton("Peruuta", null)
-                    .show();
-        });
-
-        adapter.setOnPostcardDetailsClickListener(postcard -> {
-            NavDirections action =
-                    GalleryFragmentDirections.actionNavigationGalleryToNavigationDetails(postcard.getId());
-            NavigationManager.getInstance().navigate(this, action);
-        });
 
         try {
             // Observe postcards list
@@ -131,5 +98,42 @@ public class GalleryFragment extends Fragment {
         checkBoxSentByUser = view.findViewById(R.id.checkbox_filter_sent_by_user);
         applyFiltersButton = view.findViewById(R.id.button_apply_filters);
         clearFiltersButton = view.findViewById(R.id.button_clear_filters);
+    }
+
+    private void setupRecyclerView() {
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        // Adapter for displaying the postcards
+        adapter = new PostcardAdapter();
+        recyclerView.setAdapter(adapter);
+
+        // Isfavorite listener
+        adapter.setPostcardFavoriteToggleListener(((postcard, isFavorite) -> {
+            postcard.setFavorite(isFavorite);
+            postcardViewModel.updateFavoriteStatus(postcard, isFavorite);
+            Toast.makeText(getContext(),
+                    "Postikortti " + (isFavorite ? "on lemppari" : "ei oo lemppari"),
+                    Toast.LENGTH_SHORT).show();
+        }));
+
+        // Delete listener
+        adapter.setOnPostcardDeleteListener(postcard -> {
+            new AlertDialog.Builder(getContext())
+                    .setTitle("Vahvista poisto")
+                    .setMessage("Haluatko varmasti poistaa postikortin \"" + postcard.getTopic() + "\"?")
+                    .setPositiveButton("Poista", (dialog, which) -> {
+                        postcardViewModel.deletePostcardCompletely(postcard);
+                        adapter.removePostcard(postcard);
+                        Toast.makeText(getContext(), "Postikortti poistettu", Toast.LENGTH_SHORT).show();
+                    })
+                    .setNegativeButton("Peruuta", null)
+                    .show();
+        });
+
+        // Detail click listener
+        adapter.setOnPostcardDetailsClickListener(postcard -> {
+            NavDirections action =
+                    GalleryFragmentDirections.actionNavigationGalleryToNavigationDetails(postcard.getId());
+            NavigationManager.getInstance().navigate(this, action);
+        });
     }
 }
