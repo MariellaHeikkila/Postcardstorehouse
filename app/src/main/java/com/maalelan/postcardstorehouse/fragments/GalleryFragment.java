@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Spinner;
@@ -21,8 +22,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.maalelan.postcardstorehouse.R;
 import com.maalelan.postcardstorehouse.adapters.PostcardAdapter;
+import com.maalelan.postcardstorehouse.models.FilterCriteria;
 import com.maalelan.postcardstorehouse.navigation.NavigationManager;
 import com.maalelan.postcardstorehouse.viewmodels.PostcardViewModel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GalleryFragment extends Fragment {
 
@@ -54,33 +59,9 @@ public class GalleryFragment extends Fragment {
         // Initialize RecyclerView and ViewModel
         initializeViews(view);
         setupRecyclerView();
-
-        // Initialize ViewModel to observe the data
-        postcardViewModel = new ViewModelProvider(this).get(PostcardViewModel.class);
-
-        try {
-            // Observe postcards list
-            postcardViewModel.getAllPostcards().observe(getViewLifecycleOwner(), postcards -> {
-                // Update adapter with new data
-                adapter.setPostcards(postcards);
-
-                // Show "No postcards" message if db is empty
-                if (postcards == null || postcards.isEmpty()) {
-                    emptyGalleryView.setVisibility(View.VISIBLE);
-                    recyclerView.setVisibility(View.GONE);
-                } else {
-                    emptyGalleryView.setVisibility(View.GONE);
-                    recyclerView.setVisibility(View.VISIBLE);
-                }
-            });
-
-            postcardViewModel.getPostcardThumbnails().observe(getViewLifecycleOwner(), thumbnails -> {
-                adapter.setPostcardThumbnails(thumbnails);
-            });
-        } catch (Exception e) {
-            Toast.makeText(getContext(), "An error occurred: " + e.getMessage(), Toast.LENGTH_LONG).show();
-        }
-
+        setupViewModel();
+        setupFilterUI();
+        observeData();
     }
 
     private void initializeViews(View view) {
@@ -135,5 +116,162 @@ public class GalleryFragment extends Fragment {
                     GalleryFragmentDirections.actionNavigationGalleryToNavigationDetails(postcard.getId());
             NavigationManager.getInstance().navigate(this, action);
         });
+    }
+
+    private void setupViewModel() {
+        // Initialize ViewModel to observe the data
+        postcardViewModel = new ViewModelProvider(this).get(PostcardViewModel.class);
+    }
+
+    private void setupFilterUI() {
+        // Toggle filter panel visibility
+        toggleFilterButton.setOnClickListener(v -> toggleFilterPanel());
+
+        // Apply filters button
+        applyFiltersButton.setOnClickListener(v -> applyFilters());
+
+        //clear filters button
+        clearFiltersButton.setOnClickListener(v -> clearFilters());
+
+        // Initially hide filter panel
+        filterPanel.setVisibility(View.GONE);
+    }
+
+    private void observeData() {
+        try {
+            // Observe postcards list
+            postcardViewModel.getDisplayedPostcards().observe(getViewLifecycleOwner(), postcards -> {
+                // Update adapter with new data
+                adapter.setPostcards(postcards);
+                updateEmptyView(postcards);
+            });
+
+            // Observe postcard thumbnails
+            postcardViewModel.getPostcardThumbnails().observe(getViewLifecycleOwner(), thumbnails -> {
+                adapter.setPostcardThumbnails(thumbnails);
+            });
+
+            // Observe filter options and populate spinners
+            observeFilterOptions();
+
+            // Observe current filter criteria to update UI
+            postcardViewModel.getCurrentFilterCriteria().observe(getViewLifecycleOwner(), criteria -> {
+                updateFilterButtonText();
+            });
+
+        } catch (Exception e) {
+            Toast.makeText(getContext(), "An error occurred: " + e.getMessage(), Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void observeFilterOptions() {
+        postcardViewModel.getAvailableCountries().observe(getViewLifecycleOwner(), countries -> {
+            populateSpinner(spinnerCountry, countries, "Kaikki maat");
+        });
+
+        postcardViewModel.getAvailableTopics().observe(getViewLifecycleOwner(), topics -> {
+            populateSpinner(spinnerTopic, topics, "Kaikki aiheet");
+        });
+
+        postcardViewModel.getAvailableTagNames().observe(getViewLifecycleOwner(), tagnames -> {
+            populateSpinner(spinnerTagName, tagnames, "Kaikki kuva-aiheet");
+        });
+    }
+
+    private void populateSpinner(Spinner spinner, List<String> items, String defaultOption) {
+        if (items == null) items = new ArrayList<>();
+
+        List<String> spinnerItems = new ArrayList<>();
+        spinnerItems.add(defaultOption); // Add default "all" option
+        spinnerItems.addAll(items);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                getContext(),
+                android.R.layout.simple_spinner_item,
+                spinnerItems
+        );
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+    }
+
+    private void toggleFilterPanel() {
+        isFilterPanelVisible = !isFilterPanelVisible;
+        filterPanel.setVisibility(isFilterPanelVisible ? View.VISIBLE : View.GONE);
+        updateFilterButtonText();
+    }
+
+    private void updateFilterButtonText() {
+        boolean hasActiveFilters = postcardViewModel.hasActiveFilters();
+        String buttonText;
+
+        if (isFilterPanelVisible) {
+            buttonText = "Piilota suodattimet";
+        } else if (hasActiveFilters) {
+            buttonText = "Näytä suodattimet (Aktiiviset)";
+        } else {
+            buttonText = "Näytä suodattimet";
+        }
+
+        toggleFilterButton.setText(buttonText);
+    }
+
+    private void applyFilters() {
+        FilterCriteria.Builder builder = new FilterCriteria.Builder();
+
+        if (spinnerCountry.getSelectedItemPosition() > 0) {
+            builder.setCountry((String) spinnerCountry.getSelectedItem());
+        }
+
+        if (spinnerTopic.getSelectedItemPosition() > 0) {
+            builder.setTopic((String) spinnerTopic.getSelectedItem());
+        }
+
+        if (spinnerTagName.getSelectedItemPosition() > 0) {
+            builder.setTagName((String) spinnerTagName.getSelectedItem());
+        }
+
+        if (checkBoxFavorite.isChecked()) {
+            builder.setIsFavorite(true);
+        }
+
+        if (checkBoxSentByUser.isChecked()) {
+            builder.setIsSentByUser(true);
+        }
+
+        FilterCriteria criteria = builder.build();
+        postcardViewModel.applyFilters(criteria);
+
+        Toast.makeText(getContext(), "Haku suoritettu", Toast.LENGTH_SHORT).show();
+    }
+
+    private void clearFilters() {
+        //reset UI components
+        spinnerCountry.setSelection(0);
+        spinnerTopic.setSelection(0);
+        spinnerTagName.setSelection(0);
+        checkBoxFavorite.setChecked(false);
+        checkBoxSentByUser.setChecked(false);
+
+        // clear filter in viewModel
+        postcardViewModel.clearFilters();
+
+        Toast.makeText(getContext(), "Suodattimet tyhjennetty", Toast.LENGTH_SHORT).show();
+    }
+
+    private void updateEmptyView(List<?> postcards) {
+        if (postcards == null || postcards.isEmpty()) {
+            emptyGalleryView.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.GONE);
+
+            // Update empty message based on whether filters are active
+            if (postcardViewModel.hasActiveFilters()) {
+                emptyGalleryView.setText("Ei postikortteja valituilla suodattimilla");
+            } else {
+                emptyGalleryView.setText("Ei postikortteja");
+            }
+        } else {
+            emptyGalleryView.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
+        }
     }
 }
