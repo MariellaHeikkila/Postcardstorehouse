@@ -187,7 +187,7 @@ public class GalleryFragment extends Fragment {
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 getContext(),
-                android.R.layout.simple_spinner_item,
+                R.layout.spinner_selected_item,
                 spinnerItems
         );
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

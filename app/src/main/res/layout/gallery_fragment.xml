@@ -9,12 +9,14 @@
     <!-- Filter toggle button -->
     <Button
         android:id="@+id/button_toggle_filter"
+        style="@style/Widget.Retro.PrimaryButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Näytä suodattimet"
         android:layout_gravity="end"
         android:padding="8dp"
-        android:layout_marginBottom="8dp"/>
+        android:layout_marginBottom="8dp"
+        android:layout_marginRight="8dp"/>
 
     <!-- Filter panel -->
     <LinearLayout
@@ -23,9 +25,10 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="8dp"
-        android:background="@color/off_white"
+        android:background="#CCFFFFFF"
         android:visibility="gone"
-        android:layout_marginBottom="8dp">
+        android:layout_marginBottom="8dp"
+        android:layout_marginHorizontal="8dp">
 
         <Spinner
             android:id="@+id/spinner_country"
@@ -67,6 +70,7 @@
 
             <Button
                 android:id="@+id/button_clear_filters"
+                style="@style/Widget.Retro.PrimaryButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Tyhjennä valinnat"
@@ -74,6 +78,7 @@
 
             <Button
                 android:id="@+id/button_apply_filters"
+                style="@style/Widget.Retro.PrimaryButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Käytä"/>

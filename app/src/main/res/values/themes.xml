@@ -15,6 +15,7 @@
         <item name="bottomNavigationStyle">@style/Widget.Postcardstorehouse.BottomNavigationView</item>
         <item name="spinnerStyle">@style/Widget.Retro.Spinner</item>
         <item name="editTextStyle">@style/Widget.Retro.EditText</item>
+        <item name="android:textViewStyle">@style/Widget.Retro.TextView</item>
     </style>
 
     <style name="Theme.Postcardstorehouse" parent="Base.Theme.Postcardstorehouse" />

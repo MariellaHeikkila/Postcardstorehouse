@@ -106,7 +106,7 @@ public class AddPostcardFragment extends Fragment {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
                 requireContext(),
                 R.array.tag_list,
-                android.R.layout.simple_spinner_item
+                R.layout.spinner_selected_item
         );
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerTag.setAdapter(adapter);

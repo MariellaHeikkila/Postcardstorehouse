@@ -62,11 +62,11 @@ public class PostcardDetailsFragment extends Fragment {
         viewModel.getPostcardById(postcardId).observe(getViewLifecycleOwner(), postcard -> {
             if (postcard != null) {
                 // Update fields with postcard details
-                textCountry.setText(postcard.getCountry());
-                textTopic.setText(postcard.getTopic());
-                textSentDate.setText(DateUtils.format(postcard.getSentDate()));
-                textReceivedDate.setText(DateUtils.format(postcard.getReceivedDate()));
-                textNotes.setText(postcard.getNotes());
+                textCountry.setText("Maa: " + postcard.getCountry());
+                textTopic.setText("Aihe: " + postcard.getTopic());
+                textSentDate.setText("Lähetyspäivä: " + DateUtils.format(postcard.getSentDate()));
+                textReceivedDate.setText("Vastaanotettu: "+ DateUtils.format(postcard.getReceivedDate()));
+                textNotes.setText("Muistiinpanot: " + postcard.getNotes());
                 // remove previous listener to avoid triggering on setChecked
                 checkFavorite.setOnCheckedChangeListener(null);
                 checkFavorite.setChecked(postcard.isFavorite());
