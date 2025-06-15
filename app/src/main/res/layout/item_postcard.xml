@@ -47,7 +47,7 @@
             android:id="@+id/text_country"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Country"
+            android:text="@string/country"
             android:textStyle="bold"
             android:textSize="20dp"
             android:paddingBottom="2dp"/>
@@ -56,7 +56,7 @@
             android:id="@+id/text_topic"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Topic"
+            android:text="@string/topic"
             android:textSize="18dp"
             android:paddingBottom="2dp"/>
 
@@ -64,7 +64,7 @@
             android:id="@+id/text_sent_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Sent Date"
+            android:text="@string/sent_date"
             android:textSize="16dp" />
 
         <LinearLayout
@@ -81,7 +81,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Poista" />
+            android:text="@string/delete_postcard_button" />
 
         <Button
             android:id="@+id/button_to_details"
@@ -89,7 +89,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Avaa" />
+            android:text="@string/to_details_button" />
 
         </LinearLayout>
 

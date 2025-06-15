@@ -27,7 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="12dp"
-            android:text="Country"
+            android:text="@string/country"
             android:textStyle="bold"
             android:textSize="20dp"
             android:paddingBottom="2dp"/>
@@ -36,7 +36,7 @@
             android:id="@+id/text_detail_topic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="topic"
+            android:text="@string/topic"
             android:textSize="18dp"
             android:paddingBottom="2dp"/>
 
@@ -44,7 +44,7 @@
             android:id="@+id/text_detail_notes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Notes"
+            android:text="@string/notes"
             android:textSize="16dp"
             android:paddingBottom="2dp"/>
 
@@ -52,7 +52,7 @@
             android:id="@+id/text_detail_sent_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Sent Date"
+            android:text="@string/sent_date"
             android:textSize="16dp"
             android:paddingBottom="2dp"/>
 
@@ -60,7 +60,7 @@
             android:id="@+id/text_detail_received_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Received Date"
+            android:text="@string/received_date"
             android:textSize="16dp"
             android:paddingBottom="2dp"/>
 
@@ -68,13 +68,13 @@
             android:id="@+id/checkbox_detail_favorite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Favorite"/>
+            android:text="@string/is_favorite"/>
 
         <CheckBox
             android:id="@+id/checkbox_detail_sent_by_user"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Sent by me"/>
+            android:text="@string/is_sent_by_user"/>
 
     </LinearLayout>
 

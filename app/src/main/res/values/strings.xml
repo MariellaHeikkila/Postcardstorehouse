@@ -1,9 +1,47 @@
 <resources>
-    <string name="app_name">Postcardstorehouse</string>
+    <string name="app_name" translatable="false">Postcardstorehouse</string>
+
+    <!-- The action for navigating to Gallery and title indicating gallery view. -->
+    <string name="gallery">Gallery</string>
+    <!-- The action for navigating to add new postcard and title indicating add new view view. -->
+    <string name="add_new">Add new</string>
+    <!-- The action for opening camera. -->
+    <string name="add_photo_button">Take a Picture</string>
+    <!-- The add postcard form - hint text for sent date, received date, country,
+            choosing picture type, notes. -->
+    <string name="sent_date_hint">Sent date</string>
+    <string name="received_date_hint">Received date</string>
+    <string name="country_hint">Country</string>
+    <string name="topic_hint">Topic</string>
+    <string name="picture_type_hint">Picture type:</string>
+    <string name="notes_hint">Notes</string>
+    <string name="mark_as_favorite_checkbox_text">Mark as favorite</string>
+    <string name="sent_by_user_checkbox_text">Sent by me</string>
+    <!-- The action for saving new postcard -->
+    <string name="save_postcard_button">Save postcard</string>
+    <!-- postcard item text fields -->
+    <string name="country">Country: </string>
+    <string name="topic">Topic: </string>
+    <string name="sent_date">Sent date: </string>
+    <string name="received_date">Received date: </string>
+    <string name="notes">Notes: </string>
+    <string name="is_favorite">Is favorite</string>
+    <string name="is_sent_by_user">Is sent by me</string>
+    <string name="delete_postcard_button">Delete</string>
+    <string name="to_details_button">Details</string>
+    <!-- Filter stuff -->
+    <string name="show_filters_button">Show filters</string>
+    <string name="hide_filters_button">Hide filters</string>
+    <string name="apply_filters_button">Apply</string>
+    <string name="clear_filters_button">Clear</string>
+    <string name="favorites_filter">Favorites</string>
+    <string name="sent_by_user_filter">Sent by me</string>
+    <!-- information for empty gallery view -->
+    <string name="no_postcards_to_display">No postcards to display.</string>
 
     <string-array name="tag_list">
-        <item>postikortti</item>
-        <item>postimerkki</item>
-        <item>leima</item>
+        <item>Front side</item>
+        <item>Postage stamp</item>
+        <item>Stamp</item>
     </string-array>
 </resources>

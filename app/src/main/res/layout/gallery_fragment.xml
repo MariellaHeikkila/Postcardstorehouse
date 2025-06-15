@@ -12,7 +12,7 @@
         style="@style/Widget.Retro.PrimaryButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Näytä suodattimet"
+        android:text="@string/show_filters_button"
         android:layout_gravity="end"
         android:padding="8dp"
         android:layout_marginBottom="8dp"
@@ -52,14 +52,14 @@
             android:id="@+id/checkbox_filter_favorite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Näytä suosikit"
+            android:text="@string/favorites_filter"
             android:layout_marginBottom="4dp"/>
 
         <CheckBox
             android:id="@+id/checkbox_filter_sent_by_user"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Näytä itse lähetetyt"
+            android:text="@string/sent_by_user_filter"
             android:layout_marginBottom="4dp"/>
 
         <LinearLayout
@@ -73,7 +73,7 @@
                 style="@style/Widget.Retro.PrimaryButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Tyhjennä valinnat"
+                android:text="@string/clear_filters_button"
                 android:layout_marginEnd="8dp"/>
 
             <Button
@@ -81,7 +81,7 @@
                 style="@style/Widget.Retro.PrimaryButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Käytä"/>
+                android:text="@string/apply_filters_button"/>
 
         </LinearLayout>
 
@@ -91,7 +91,7 @@
         android:id="@+id/empty_gallery_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="No postcards to display"
+        android:text="@string/no_postcards_to_display"
         android:textAlignment="center"
         android:textSize="20sp"
         android:padding="16dp"

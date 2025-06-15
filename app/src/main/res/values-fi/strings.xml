@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="gallery">Galleria</string>
+    <string name="add_new">Lisää uusi</string>
+    <!-- add new postcard form -->
+    <string name="add_photo_button">Ota kuva</string>
+    <string name="sent_date_hint">Lähetetty</string>
+    <string name="received_date_hint">Vastaanotettu</string>
+    <string name="country_hint">Lähetysmaa</string>
+    <string name="topic_hint">Aihe</string>
+    <string name="picture_type_hint">valitse kuvatyyppi:</string>
+    <string name="notes_hint">Muistiinpanot</string>
+    <string name="mark_as_favorite_checkbox_text">Merkitse suosikiksi</string>
+    <string name="sent_by_user_checkbox_text">Lähettämäni</string>
+    <string name="save_postcard_button">Tallenna postikortti</string>
+    <!-- postcard item text fields -->
+    <string name="country">Maa: </string>
+    <string name="topic">Aihe: </string>
+    <string name="sent_date">Lähetyspäivä: </string>
+    <string name="received_date">Vastaanotettu: </string>
+    <string name="notes">Muistiinpanot: </string>
+    <string name="is_favorite">Suosikki</string>
+    <string name="is_sent_by_user">Lähettämäni</string>
+    <string name="delete_postcard_button">Poista</string>
+    <string name="to_details_button">Avaa</string>
+    <!-- Filter stuff -->
+    <string name="show_filters_button">Näytä suodattimet</string>
+    <string name="hide_filters_button">Piilota suodattimet</string>
+    <string name="apply_filters_button">Käytä</string>
+    <string name="clear_filters_button">Tyhjennä</string>
+    <string name="favorites_filter">Suosikit</string>
+    <string name="sent_by_user_filter">Lähetetyt</string>
+
+    <string-array name="tag_list">
+        <item>postikortti</item>
+        <item>postimerkki</item>
+        <item>leima</item>
+    </string-array>
+</resources>
