@@ -1,5 +1,6 @@
 package com.maalelan.postcardstorehouse.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -61,12 +62,21 @@ public class PostcardDetailsFragment extends Fragment {
         // Observe the postcard data by ID
         viewModel.getPostcardById(postcardId).observe(getViewLifecycleOwner(), postcard -> {
             if (postcard != null) {
+
+                Context context = requireContext();
+
+                String countryText = context.getString(R.string.country, postcard.getCountry());
+                String topicText = context.getString(R.string.topic, postcard.getTopic());
+                String sentDateText = context.getString(R.string.sent_date,  DateUtils.format(postcard.getSentDate()));
+                String receivedDateText = context.getString(R.string.received_date,  DateUtils.format(postcard.getReceivedDate()));
+                String notesText = context.getString(R.string.notes, postcard.getNotes());
+
                 // Update fields with postcard details
-                textCountry.setText("Maa: " + postcard.getCountry());
-                textTopic.setText("Aihe: " + postcard.getTopic());
-                textSentDate.setText("Lähetyspäivä: " + DateUtils.format(postcard.getSentDate()));
-                textReceivedDate.setText("Vastaanotettu: "+ DateUtils.format(postcard.getReceivedDate()));
-                textNotes.setText("Muistiinpanot: " + postcard.getNotes());
+                textCountry.setText(countryText);
+                textTopic.setText(topicText);
+                textSentDate.setText(sentDateText);
+                textReceivedDate.setText(receivedDateText);
+                textNotes.setText(notesText);
                 // remove previous listener to avoid triggering on setChecked
                 checkFavorite.setOnCheckedChangeListener(null);
                 checkFavorite.setChecked(postcard.isFavorite());

@@ -1,5 +1,6 @@
 package com.maalelan.postcardstorehouse.adapters;
 
+import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -131,12 +132,18 @@ public class PostcardAdapter extends RecyclerView.Adapter<PostcardAdapter.Postca
     public void onBindViewHolder(@NonNull PostcardViewHolder holder, int position) {
         Postcard postcard = postcards.get(position);
 
+        Context context = holder.itemView.getContext();
+
+        String countryText = context.getString(R.string.country, postcard.getCountry());
+        String topicText = context.getString(R.string.topic, postcard.getTopic());
+        String sentDateText = context.getString(R.string.sent_date,  DateUtils.format(postcard.getSentDate()));
+
         // Set data from the Postcard object to the corresponding views
-        holder.textViewCountry.setText("Maa: " + postcard.getCountry());
-        holder.textViewTopic.setText("Aihe: " + postcard.getTopic());
+        holder.textViewCountry.setText(countryText);
+        holder.textViewTopic.setText(topicText);
 
         // Convert the sent date to a string format before displaying
-        holder.textViewDate.setText("Lähetyspäivä: " + DateUtils.format(postcard.getSentDate()));
+        holder.textViewDate.setText(sentDateText);
         holder.checkBoxFavorite.setOnCheckedChangeListener(null);
         holder.checkBoxFavorite.setChecked(postcard.isFavorite());
 
@@ -186,9 +193,7 @@ public class PostcardAdapter extends RecyclerView.Adapter<PostcardAdapter.Postca
     public static class PostcardViewHolder extends RecyclerView.ViewHolder {
         TextView textViewCountry, textViewTopic, textViewDate;
         ImageView imageViewThumbnail;
-
         CheckBox checkBoxFavorite;
-
         Button deletePostcard, detailsButton;
 
         /**

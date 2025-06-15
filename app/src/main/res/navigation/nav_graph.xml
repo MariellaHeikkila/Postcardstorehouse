@@ -7,12 +7,12 @@
     <fragment
         android:id="@+id/navigation_home"
         android:name="com.maalelan.postcardstorehouse.fragments.HomeFragment"
-        android:label="Home" />
+        android:label="@string/app_name" />
 
     <fragment
         android:id="@+id/navigation_gallery"
         android:name="com.maalelan.postcardstorehouse.fragments.GalleryFragment"
-        android:label="Gallery">
+        android:label="@string/gallery">
         <action
             android:id="@+id/action_navigation_gallery_to_navigation_details"
             app:destination="@+id/navigation_details"/>
@@ -21,12 +21,12 @@
     <fragment
         android:id="@+id/navigation_add"
         android:name="com.maalelan.postcardstorehouse.fragments.AddPostcardFragment"
-        android:label="Add" />
+        android:label="@string/add_new" />
 
     <fragment
         android:id="@+id/navigation_details"
         android:name="com.maalelan.postcardstorehouse.fragments.PostcardDetailsFragment"
-        android:label="details">
+        android:label="@string/details">
 
         <argument
             android:name="postcardId"

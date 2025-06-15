@@ -2,6 +2,7 @@
 <resources>
     <string name="gallery">Galleria</string>
     <string name="add_new">Lisää uusi</string>
+    <string name="details">Lisätiedot</string>
     <!-- add new postcard form -->
     <string name="add_photo_button">Ota kuva</string>
     <string name="sent_date_hint">Lähetetty</string>
@@ -11,25 +12,32 @@
     <string name="picture_type_hint">valitse kuvatyyppi:</string>
     <string name="notes_hint">Muistiinpanot</string>
     <string name="mark_as_favorite_checkbox_text">Merkitse suosikiksi</string>
-    <string name="sent_by_user_checkbox_text">Lähettämäni</string>
+    <string name="sent_by_user_checkbox_text">Lähetetyt</string>
     <string name="save_postcard_button">Tallenna postikortti</string>
     <!-- postcard item text fields -->
-    <string name="country">Maa: </string>
-    <string name="topic">Aihe: </string>
-    <string name="sent_date">Lähetyspäivä: </string>
-    <string name="received_date">Vastaanotettu: </string>
-    <string name="notes">Muistiinpanot: </string>
+    <string name="country">Maa: %s</string>
+    <string name="topic">Aihe: %s</string>
+    <string name="sent_date">Lähetyspäivä: %s</string>
+    <string name="received_date">Vastaanotettu: %s</string>
+    <string name="notes">Muistiinpanot: %s</string>
     <string name="is_favorite">Suosikki</string>
-    <string name="is_sent_by_user">Lähettämäni</string>
+    <string name="is_sent_by_user">Lähetetty</string>
     <string name="delete_postcard_button">Poista</string>
     <string name="to_details_button">Avaa</string>
     <!-- Filter stuff -->
     <string name="show_filters_button">Näytä suodattimet</string>
+    <string name="show_active_filters_button">Näytä aktiiviset suodattimet</string>
     <string name="hide_filters_button">Piilota suodattimet</string>
     <string name="apply_filters_button">Käytä</string>
     <string name="clear_filters_button">Tyhjennä</string>
     <string name="favorites_filter">Suosikit</string>
     <string name="sent_by_user_filter">Lähetetyt</string>
+    <string name="show_countries_filter">Maat</string>
+    <string name="show_topics_filter">Aiheet</string>
+    <string name="show_tags_filter">Kuva-aiheet</string>
+
+    <string name="no_postcards_to_display">Ei postikortteja tallennettuna.</string>
+    <string name="no_postcards_to_display_with_filters">Ei postikortteja valituilla suodattimilla.</string>
 
     <string-array name="tag_list">
         <item>postikortti</item>

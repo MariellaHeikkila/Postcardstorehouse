@@ -1,6 +1,7 @@
 package com.maalelan.postcardstorehouse.fragments;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -165,16 +166,18 @@ public class GalleryFragment extends Fragment {
     }
 
     private void observeFilterOptions() {
+        Context context = requireContext();
+
         postcardViewModel.getAvailableCountries().observe(getViewLifecycleOwner(), countries -> {
-            populateSpinner(spinnerCountry, countries, "Kaikki maat");
+            populateSpinner(spinnerCountry, countries, context.getString(R.string.show_countries_filter));
         });
 
         postcardViewModel.getAvailableTopics().observe(getViewLifecycleOwner(), topics -> {
-            populateSpinner(spinnerTopic, topics, "Kaikki aiheet");
+            populateSpinner(spinnerTopic, topics, context.getString(R.string.show_topics_filter));
         });
 
         postcardViewModel.getAvailableTagNames().observe(getViewLifecycleOwner(), tagnames -> {
-            populateSpinner(spinnerTagName, tagnames, "Kaikki kuva-aiheet");
+            populateSpinner(spinnerTagName, tagnames, context.getString(R.string.show_tags_filter));
         });
     }
 
@@ -204,12 +207,17 @@ public class GalleryFragment extends Fragment {
         boolean hasActiveFilters = postcardViewModel.hasActiveFilters();
         String buttonText;
 
+        Context context = requireContext();
+        String hideFiltersText = context.getString(R.string.hide_filters_button);
+        String showActiveFiltersText = context.getString(R.string.show_active_filters_button);
+        String showFiltersText = context.getString(R.string.show_filters_button);
+
         if (isFilterPanelVisible) {
-            buttonText = "Piilota suodattimet";
+            buttonText = hideFiltersText;
         } else if (hasActiveFilters) {
-            buttonText = "Näytä suodattimet (Aktiiviset)";
+            buttonText = showActiveFiltersText;
         } else {
-            buttonText = "Näytä suodattimet";
+            buttonText = showFiltersText;
         }
 
         toggleFilterButton.setText(buttonText);
@@ -265,9 +273,9 @@ public class GalleryFragment extends Fragment {
 
             // Update empty message based on whether filters are active
             if (postcardViewModel.hasActiveFilters()) {
-                emptyGalleryView.setText("Ei postikortteja valituilla suodattimilla");
+                emptyGalleryView.setText(R.string.no_postcards_to_display_with_filters);
             } else {
-                emptyGalleryView.setText("Ei postikortteja");
+                emptyGalleryView.setText(R.string.no_postcards_to_display);
             }
         } else {
             emptyGalleryView.setVisibility(View.GONE);

@@ -5,6 +5,7 @@
     <string name="gallery">Gallery</string>
     <!-- The action for navigating to add new postcard and title indicating add new view view. -->
     <string name="add_new">Add new</string>
+    <string name="details">Details</string>
     <!-- The action for opening camera. -->
     <string name="add_photo_button">Take a Picture</string>
     <!-- The add postcard form - hint text for sent date, received date, country,
@@ -20,24 +21,29 @@
     <!-- The action for saving new postcard -->
     <string name="save_postcard_button">Save postcard</string>
     <!-- postcard item text fields -->
-    <string name="country">Country: </string>
-    <string name="topic">Topic: </string>
-    <string name="sent_date">Sent date: </string>
-    <string name="received_date">Received date: </string>
-    <string name="notes">Notes: </string>
+    <string name="country">Country: %s</string>
+    <string name="topic">Topic: %s</string>
+    <string name="sent_date">Sent date: %s</string>
+    <string name="received_date">Received date: %s</string>
+    <string name="notes">Notes: %s</string>
     <string name="is_favorite">Is favorite</string>
     <string name="is_sent_by_user">Is sent by me</string>
     <string name="delete_postcard_button">Delete</string>
     <string name="to_details_button">Details</string>
     <!-- Filter stuff -->
     <string name="show_filters_button">Show filters</string>
+    <string name="show_active_filters_button">Show active filters</string>
     <string name="hide_filters_button">Hide filters</string>
     <string name="apply_filters_button">Apply</string>
     <string name="clear_filters_button">Clear</string>
     <string name="favorites_filter">Favorites</string>
     <string name="sent_by_user_filter">Sent by me</string>
+    <string name="show_countries_filter">Countries</string>
+    <string name="show_topics_filter">Topics</string>
+    <string name="show_tags_filter">Tags</string>
     <!-- information for empty gallery view -->
     <string name="no_postcards_to_display">No postcards to display.</string>
+    <string name="no_postcards_to_display_with_filters">No postcards to display with chosen filters.</string>
 
     <string-array name="tag_list">
         <item>Front side</item>
