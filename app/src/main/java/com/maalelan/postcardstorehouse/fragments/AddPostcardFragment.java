@@ -32,11 +32,13 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.maalelan.postcardstorehouse.R;
 import com.maalelan.postcardstorehouse.models.Postcard;
 import com.maalelan.postcardstorehouse.models.PostcardImage;
 import com.maalelan.postcardstorehouse.utils.DateUtils;
 import com.maalelan.postcardstorehouse.utils.ImageUtils;
+import com.maalelan.postcardstorehouse.utils.InputValidator;
 import com.maalelan.postcardstorehouse.viewmodels.PostcardViewModel;
 
 import java.io.File;
@@ -214,8 +216,6 @@ public class AddPostcardFragment extends Fragment {
     private void savePostcard() {
         String sentText = editSentDate.getText().toString().trim();
         String receivedText = editReceivedDate.getText().toString().trim();
-        Date sentDate = DateUtils.parse(sentText);
-        Date receivedDate = DateUtils.parse(receivedText);
         String country = editCountry.getText().toString().trim();
         String topic = editTopic.getText().toString().trim();
         String notes = editNotes.getText().toString().trim();
@@ -224,6 +224,34 @@ public class AddPostcardFragment extends Fragment {
         String tagName = spinnerTag.getSelectedItem().toString();
 
         // Validation maybe here
+        Date sentDate = InputValidator.getValidSentDate(sentText);
+        if (sentDate == null) {
+            showSnackBar("Virheellinen lähetyspäivämäärä");
+            return;
+        }
+
+        Date receivedDate = InputValidator.getValidReceivedDate(receivedText);
+        if (receivedDate == null) {
+            showSnackBar("Virheellinen vastaanottopäivämäärä");
+            return;
+        }
+
+        if (!InputValidator.isChronological(sentDate, receivedDate)) {
+            showSnackBar( "Saapumispäivä ei voi olla ennen lähetyspäivää");
+            return;
+        }
+        if (!InputValidator.isValidCountry(country)) {
+            editCountry.setError("Anna kelvollinen maa (max 50 merkkiä)");
+            return;
+        }
+        if (!InputValidator.isValidTopic(topic)) {
+            editTopic.setError("Anna aihe (max 100 merkkiä)");
+            return;
+        }
+        if (!InputValidator.isValidNotes(notes)) {
+            editNotes.setError("Liikaa tekstiä, max 300 merkkiä");
+            return;
+        }
 
         // Build postcard object
         Postcard postcard = new Postcard(
@@ -259,6 +287,12 @@ public class AddPostcardFragment extends Fragment {
             });
         });
 
+    }
+    private void showSnackBar(String message) {
+        Snackbar.make(requireActivity().findViewById(android.R.id.content),
+                        message, Snackbar.LENGTH_INDEFINITE)
+                .setAction("OK", v -> {})
+                .show();
     }
 
     private void resetForm() {
