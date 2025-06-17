@@ -23,6 +23,8 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
@@ -59,13 +61,54 @@ public class AddPostcardFragment extends Fragment {
     private CheckBox checkboxFavorite, checkboxIsSentByUser;
     private Button buttonSave, buttonAddPhoto;
 
-    private static final int REQUEST_IMAGE_CAPTURE = 1;
-    private static final int REQUEST_CAMERA_PERMISSION = 2;
-    private static final int REQUEST_STORAGE_PERMISSION =3;
+    private ActivityResultLauncher<Intent> cameraLauncher;
+    private ActivityResultLauncher<String> permissionLauncher;
+
     private ImageView imagePreview;
     private Bitmap capturedImage;
-
     private Spinner spinnerTag;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        // Initialize Activity Result launcher in onCreate before onCreateView
+        initializeActivityResultLaunchers();
+    }
+    /**
+     * Initialize the modern Activity Result API launchers
+     */
+    private void initializeActivityResultLaunchers() {
+        // Camera launcher - handles the camera intent result
+        cameraLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    // Handle camera result - equivalent to old onActivityresult
+                    if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
+                        Toast.makeText(getContext(), "Kuva otettu", Toast.LENGTH_SHORT).show();
+                        Bundle extras = result.getData().getExtras();
+                        Bitmap imageBitmap = (Bitmap) extras.get("data");
+                        if (imageBitmap != null) {
+                            imagePreview.setImageBitmap(imageBitmap); // set preview image
+                            capturedImage = imageBitmap;
+                        }
+                    }
+                }
+        );
+
+        // Permission launcher - handles camera permission request result
+        permissionLauncher = registerForActivityResult(
+                new ActivityResultContracts.RequestPermission(),
+                isGranted -> {
+                    // Handle permission result - equivalent to old onRequestPermissionResult
+                    if (isGranted) {
+                        openCamera();
+                    } else {
+                        Toast.makeText(getContext(), "Kameran käyttöoikeus tarvitaan kuvan ottamiseen", Toast.LENGTH_SHORT).show();
+                    }
+                }
+        );
+    }
 
     @Nullable
     @Override
@@ -115,51 +158,29 @@ public class AddPostcardFragment extends Fragment {
 
     }
 
+    /**
+     * Check camera permission and request if needed
+     */
     private void askCameraPermission() {
         if (ContextCompat.checkSelfPermission(requireContext(),
                 Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(requireActivity(),
-                    new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA_PERMISSION);
+            // Launch permission request using modern API
+            permissionLauncher.launch(Manifest.permission.CAMERA);
         } else {
             openCamera();
         }
     }
 
+    /**
+     * Open camera intent using cameraLauncher
+     */
     private void openCamera() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         try {
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+            // launch camera intent using modern Activity Result API
+            cameraLauncher.launch(takePictureIntent);
         } catch (ActivityNotFoundException e) {
             Toast.makeText(getContext(), "Kameraa ei löydy", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-                                          @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        if (requestCode == REQUEST_CAMERA_PERMISSION) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                openCamera();
-            } else {
-                Toast.makeText(getContext(), "Kameran käyttöoikeus tarvitaan kuvan ottamiseen", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode,resultCode, data);
-
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK && data != null) {
-            Toast.makeText(getContext(), "Kuva otettu!", Toast.LENGTH_SHORT).show();
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-            if (imageBitmap != null) {
-                imagePreview.setImageBitmap(imageBitmap); // sets preview image
-                capturedImage = imageBitmap;
-            }
         }
     }
 
