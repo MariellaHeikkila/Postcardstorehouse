@@ -24,8 +24,10 @@
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:src="@drawable/ic_camera_placeholder"
-            android:scaleType="centerCrop"
-            android:contentDescription="Photo preview"/>
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:contentDescription="Photo preview"
+            android:layout_marginTop="6dp"/>
 
         <!-- Button to add or take photo -->
         <Button

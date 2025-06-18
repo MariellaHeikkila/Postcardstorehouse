@@ -27,6 +27,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -43,6 +44,7 @@ import com.maalelan.postcardstorehouse.viewmodels.PostcardViewModel;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -64,6 +66,7 @@ public class AddPostcardFragment extends Fragment {
     private Button buttonSave, buttonAddPhoto;
 
     private ActivityResultLauncher<Intent> cameraLauncher;
+    private ActivityResultLauncher<Intent> galleryLauncher;
     private ActivityResultLauncher<String> permissionLauncher;
 
     private ImageView imagePreview;
@@ -93,6 +96,26 @@ public class AddPostcardFragment extends Fragment {
                         if (imageBitmap != null) {
                             imagePreview.setImageBitmap(imageBitmap); // set preview image
                             capturedImage = imageBitmap;
+                        }
+                    }
+                }
+        );
+
+        galleryLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
+                        Uri selectedImageUri = result.getData().getData();
+                        if (selectedImageUri != null) {
+                            try {
+                                Bitmap bitmap = MediaStore.Images.Media.getBitmap(requireContext().getContentResolver(), selectedImageUri);
+                                imagePreview.setImageBitmap(bitmap);
+                                capturedImage = bitmap;
+                                Toast.makeText(getContext(), "Kuva valittu galleriasta", Toast.LENGTH_SHORT).show();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                                Toast.makeText(getContext(), "Kuvan lukeminen epäonnistui", Toast.LENGTH_SHORT).show();
+                            }
                         }
                     }
                 }
@@ -142,7 +165,18 @@ public class AddPostcardFragment extends Fragment {
         imagePreview = view.findViewById(R.id.image_preview);
         spinnerTag = view.findViewById(R.id.spinner_tag);
 
-        buttonAddPhoto.setOnClickListener(v -> askCameraPermission());
+        buttonAddPhoto.setOnClickListener(v -> {
+            new AlertDialog.Builder(requireContext())
+                    .setTitle("Lisää kuva")
+                            .setItems(new CharSequence[]{"Ota kuva", "valitse galleriasta"}, (dialog, which) -> {
+                                if (which == 0) {
+                                    askCameraPermission();
+                                } else {
+                                    openGallery();
+                                }
+                            })
+                    .show();
+        });
 
         editSentDate.setOnClickListener(v -> showDatePicker(editSentDate));
         editReceivedDate.setOnClickListener(v -> showDatePicker(editReceivedDate));
@@ -184,6 +218,13 @@ public class AddPostcardFragment extends Fragment {
         } catch (ActivityNotFoundException e) {
             Toast.makeText(getContext(), "Kameraa ei löydy", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void openGallery() {
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        Uri imageUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+        intent.setDataAndType(imageUri,"image/*");
+        galleryLauncher.launch(intent);
     }
 
     /**
